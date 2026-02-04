@@ -1,0 +1,34 @@
+{
+    "title": "Kaza Tracker",
+    "totalProtocol": "Total Progress",
+    "remaining": "prayers remaining",
+    "keepGoing": "Keep going!",
+    "finishBy": "Finish by: {}",
+    "fajr": "Fajr",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha",
+    "witr": "Witr",
+    "completedDay": "Completed Full Day (+6)",
+    "activityHistory": "Activity History",
+    "onboarding": {
+        "bismillah": "Bismillah",
+        "subtitle": "Let's calculate your missed prayers so you can start clearing them today.",
+        "byYears": "By Years",
+        "byDate": "By Date",
+        "yearsHint": "e.g. 2.5",
+        "selectDate": "Select Puberty Date",
+        "start": "Start Journey"
+    },
+    "error": {
+        "selectDate": "Please select a date",
+        "enterYears": "Please enter years"
+    },
+    "nav": {
+        "prayers": "Prayers",
+        "fasting": "Fasting",
+        "settings": "Settings"
+    },
+    "fastingYears": "Missed Fasts (Years)"
+}

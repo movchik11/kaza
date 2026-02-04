@@ -78,6 +78,9 @@ class KazaRepository {
       case PrayerType.witr:
         updated = current.copyWith(witr: newValue);
         break;
+      case PrayerType.fasting:
+        updated = current.copyWith(fasting: newValue);
+        break;
     }
 
     await saveKazaData(updated);
@@ -105,4 +108,27 @@ class KazaRepository {
   }
 
   bool get isFirstRun => _box.get(_key) == null;
+
+  // Settings Persistence
+  static const String _settingsBoxName = 'settings_box';
+
+  Future<void> saveNotificationSettings(
+    bool enabled,
+    int hour,
+    int minute,
+  ) async {
+    final box = await Hive.openBox(_settingsBoxName);
+    await box.put('notifications_enabled', enabled);
+    await box.put('reminder_hour', hour);
+    await box.put('reminder_minute', minute);
+  }
+
+  Future<Map<String, dynamic>> getNotificationSettings() async {
+    final box = await Hive.openBox(_settingsBoxName);
+    return {
+      'enabled': box.get('notifications_enabled', defaultValue: false),
+      'hour': box.get('reminder_hour', defaultValue: 20),
+      'minute': box.get('reminder_minute', defaultValue: 0),
+    };
+  }
 }

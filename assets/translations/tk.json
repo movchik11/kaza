@@ -1,0 +1,34 @@
+{
+    "title": "Kaza Yzarlaýjy",
+    "totalProtocol": "Jemi Ösüş",
+    "remaining": "namaz galdy",
+    "keepGoing": "Dowam et!",
+    "finishBy": "Tamamlanjak wagty: {}",
+    "fajr": "Ertir",
+    "dhuhr": "Öýle",
+    "asr": "Ikindi",
+    "maghrib": "Agşam",
+    "isha": "Ýassy",
+    "witr": "Witr",
+    "completedDay": "1 Gün Doly (+6)",
+    "activityHistory": "Işjeňlik Taryhy",
+    "onboarding": {
+        "bismillah": "Bismilläh",
+        "subtitle": "Geliň, gaza namazlaryny hasaplalyn we şu günden başlap olary doldurylin.",
+        "byYears": "Ýyllar boýunça",
+        "byDate": "Sene boýunça",
+        "yearsHint": "mysal 2.5",
+        "selectDate": "Kämillik ýaşy senesi",
+        "start": "Başlamak"
+    },
+    "error": {
+        "selectDate": "Senäni saýlaň",
+        "enterYears": "Ýyllary giriziň"
+    },
+    "nav": {
+        "prayers": "Namazlar",
+        "fasting": "Oraza",
+        "settings": "Sazlamalar"
+    },
+    "fastingYears": "Sypdyrylan Orazalar (Ýyl)"
+}

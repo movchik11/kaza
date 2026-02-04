@@ -1,13 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:intl/intl.dart';
 import '../models/kaza_model.dart';
 import '../repositories/kaza_repository.dart';
 import 'home_screen.dart';
+import '../services/notification_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   final KazaRepository repository;
-  const OnboardingScreen({super.key, required this.repository});
+  final NotificationService notificationService;
+  const OnboardingScreen({
+    super.key,
+    required this.repository,
+    required this.notificationService,
+  });
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -15,6 +21,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _yearsController = TextEditingController();
+  final _fastingController = TextEditingController();
   DateTime? _pubertyDate;
   bool _isByDate = false;
 
@@ -25,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (_pubertyDate == null) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Please select a date')));
+        ).showSnackBar(SnackBar(content: Text('error.selectDate'.tr())));
         return;
       }
       final now = DateTime.now();
@@ -35,13 +42,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (_yearsController.text.isEmpty) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Please enter years')));
+        ).showSnackBar(SnackBar(content: Text('error.enterYears'.tr())));
         return;
       }
       final years =
           double.tryParse(_yearsController.text.replaceAll(',', '.')) ?? 0;
       totalDays = (years * 365.25).ceil();
     }
+
+    final fastingYears =
+        double.tryParse(_fastingController.text.replaceAll(',', '.')) ?? 0;
+    final totalFasting = (fastingYears * 30).ceil(); // Approx 30 days per year
 
     // Create model
     final model = KazaModel(
@@ -51,6 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       maghrib: totalDays,
       isha: totalDays,
       witr: totalDays,
+      fasting: totalFasting,
+      initialFasting: totalFasting,
     );
 
     await widget.repository.setInitialData(model);
@@ -58,7 +71,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => HomeScreen(repository: widget.repository),
+          builder: (_) => HomeScreen(
+            repository: widget.repository,
+            notificationService: widget.notificationService,
+          ),
         ),
       );
     }
@@ -77,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Bismillah',
+                'onboarding.bismillah'.tr(),
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.bold,
@@ -88,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(height: 16),
 
               Text(
-                'Let\'s calculate your missed prayers so you can start clearing them today.',
+                'onboarding.subtitle'.tr(),
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(color: Colors.grey[400]),
@@ -118,7 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            'By Years',
+                            'onboarding.byYears'.tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: !_isByDate
@@ -142,7 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            'By Date',
+                            'onboarding.byDate'.tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: _isByDate
@@ -172,8 +188,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: 'e.g. 2.5',
-                    suffixText: 'Years',
+                    hintText: 'onboarding.yearsHint'.tr(),
+                    suffixText: 'e.g. Years',
                     filled: true,
                     fillColor: colorScheme.surface,
                     border: OutlineInputBorder(
@@ -182,6 +198,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ).animate().scale(),
+
+                const SizedBox(height: 16),
+
+                TextField(
+                  controller: _fastingController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    labelText: 'onboarding.fastingYears'.tr(),
+                    hintText: '0',
+                    suffixText: 'Years',
+                    filled: true,
+                    fillColor: colorScheme.surface,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ).animate().scale(delay: 100.ms),
               ] else ...[
                 InkWell(
                   onTap: () async {
@@ -222,7 +263,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         const SizedBox(width: 12),
                         Text(
                           _pubertyDate == null
-                              ? 'Select Puberty Date'
+                              ? 'onboarding.selectDate'.tr()
                               : DateFormat(
                                   'MMMM d, yyyy',
                                 ).format(_pubertyDate!),
@@ -247,9 +288,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Start Journey',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                child: Text(
+                  'onboarding.start'.tr(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ).animate().fadeIn(delay: 600.ms).moveY(begin: 20, end: 0),
             ],

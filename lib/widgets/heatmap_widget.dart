@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HeatmapWidget extends StatelessWidget {
   final Map<DateTime, int> history;
@@ -20,7 +21,7 @@ class HeatmapWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
-            "Activity History",
+            "activityHistory".tr(),
             style: TextStyle(
               color: Colors.white.withAlpha(179),
               fontWeight: FontWeight.bold,
