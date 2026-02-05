@@ -1,69 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../repositories/kaza_repository.dart';
 
 class HeatmapWidget extends StatelessWidget {
-  final Map<DateTime, int> history;
+  final KazaRepository repository;
 
-  const HeatmapWidget({super.key, required this.history});
+  const HeatmapWidget({super.key, required this.repository});
 
   @override
   Widget build(BuildContext context) {
+    final history = repository.getHistory();
     // Generate last 70 days
     final now = DateTime.now();
     final days = List.generate(70, (index) {
       return now.subtract(Duration(days: 69 - index));
     });
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Text(
-            "activityHistory".tr(),
-            style: TextStyle(
-              color: Colors.white.withAlpha(179),
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: days.map((date) {
-            // Find activity for this date
-            // Normalize date keys to match repository logic
-            final normalizedDate = DateTime(date.year, date.month, date.day);
-            final count = history[normalizedDate] ?? 0;
-
-            Color color;
-            if (count == 0) {
-              color = Colors.white.withAlpha(13);
-            } else if (count < 6) {
-              color = const Color(0xFF065F46); // Dark Emerald
-            } else if (count < 15) {
-              color = const Color(0xFF10B981); // Emerald
-            } else {
-              color = const Color(0xFF34D399); // Bright Emerald
-            }
-
-            return Tooltip(
-              message: "${date.day}/${date.month}: $count prayers",
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(3),
-                ),
+        Row(
+          children: [
+            Icon(Icons.history_rounded, size: 18, color: colorScheme.primary),
+            const SizedBox(width: 8),
+            Text(
+              "stats.activityHistory".tr(),
+              style: TextStyle(
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
               ),
-            );
-          }).toList(),
-        ).animate().fadeIn(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: days.map((date) {
+              final normalizedDate = DateTime(date.year, date.month, date.day);
+              final count = history[normalizedDate] ?? 0;
+
+              Color color;
+              if (count == 0) {
+                color = Colors.white.withValues(alpha: 0.05);
+              } else if (count < 6) {
+                color = colorScheme.primary.withValues(alpha: 0.3);
+              } else if (count < 15) {
+                color = colorScheme.primary.withValues(alpha: 0.6);
+              } else {
+                color = colorScheme.primary;
+              }
+
+              return Tooltip(
+                message: "${DateFormat('MMM d').format(date)}: $count",
+                child: Container(
+                  width: 14,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ).animate().fadeIn(delay: 600.ms),
       ],
     );
   }
 }
+
+// Note: I need to fix the import of KazaRepository in this file.

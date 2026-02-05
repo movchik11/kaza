@@ -4,7 +4,6 @@ import '../repositories/kaza_repository.dart';
 import '../tabs/prayers_tab.dart';
 import '../tabs/fasting_tab.dart';
 import '../tabs/settings_tab.dart';
-
 import '../services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-  late final List<Widget> _tabs;
+  int _selectedIndex = 0;
+  late List<Widget> _tabs;
 
   @override
   void initState() {
@@ -40,31 +39,58 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _tabs),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.mosque_outlined),
-            selectedIcon: const Icon(Icons.mosque),
-            label: 'nav.prayers'.tr(),
+      body: IndexedStack(index: _selectedIndex, children: _tabs),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.05),
+              width: 1,
+            ),
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.wb_sunny_outlined),
-            selectedIcon: const Icon(Icons.wb_sunny),
-            label: 'nav.fasting'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings),
-            label: 'nav.settings'.tr(),
-          ),
-        ],
+        ),
+        child: NavigationBar(
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (index) =>
+              setState(() => _selectedIndex = index),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          indicatorColor: Theme.of(
+            context,
+          ).colorScheme.primary.withValues(alpha: 0.1),
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          height: 70,
+          destinations: [
+            NavigationDestination(
+              icon: const Icon(Icons.mosque_outlined, size: 24),
+              selectedIcon: Icon(
+                Icons.mosque,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'nav.prayers'.tr(),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.wb_sunny_outlined, size: 24),
+              selectedIcon: Icon(
+                Icons.wb_sunny,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'nav.fasting'.tr(),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.settings_outlined, size: 24),
+              selectedIcon: Icon(
+                Icons.settings,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'nav.settings'.tr(),
+            ),
+          ],
+        ),
       ),
     );
   }

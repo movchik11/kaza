@@ -52,9 +52,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     final fastingYears =
         double.tryParse(_fastingController.text.replaceAll(',', '.')) ?? 0;
-    final totalFasting = (fastingYears * 30).ceil(); // Approx 30 days per year
+    final totalFasting = (fastingYears * 30).ceil();
 
-    // Create model
     final model = KazaModel(
       fajr: totalDays,
       dhuhr: totalDays,
@@ -85,221 +84,252 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'onboarding.bismillah'.tr(),
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  color: colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ).animate().fadeIn().moveY(begin: -20, end: 0),
-
-              const SizedBox(height: 16),
-
-              Text(
-                'onboarding.subtitle'.tr(),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: Colors.grey[400]),
-                textAlign: TextAlign.center,
-              ).animate().fadeIn(delay: 200.ms),
-
-              const SizedBox(height: 48),
-
-              // Toggle
-              Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white10),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _isByDate = false),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: !_isByDate
-                                ? colorScheme.primary.withAlpha(51)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            'onboarding.byYears'.tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: !_isByDate
-                                  ? colorScheme.primary
-                                  : Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _isByDate = true),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: _isByDate
-                                ? colorScheme.primary.withAlpha(51)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            'onboarding.byDate'.tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: _isByDate
-                                  ? colorScheme.primary
-                                  : Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().fadeIn(delay: 400.ms),
-
-              const SizedBox(height: 32),
-
-              if (!_isByDate) ...[
-                TextField(
-                  controller: _yearsController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: 'onboarding.yearsHint'.tr(),
-                    suffixText: 'e.g. Years',
-                    filled: true,
-                    fillColor: colorScheme.surface,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ).animate().scale(),
-
-                const SizedBox(height: 16),
-
-                TextField(
-                  controller: _fastingController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    labelText: 'onboarding.fastingYears'.tr(),
-                    hintText: '0',
-                    suffixText: 'Years',
-                    filled: true,
-                    fillColor: colorScheme.surface,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ).animate().scale(delay: 100.ms),
-              ] else ...[
-                InkWell(
-                  onTap: () async {
-                    final date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime(2010),
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime.now(),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.dark(
-                              primary: colorScheme.primary,
-                              onPrimary: Colors.black,
-                              surface: const Color(0xFF1F2937),
-                              onSurface: Colors.white,
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (date != null) {
-                      setState(() => _pubertyDate = date);
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.calendar_today, color: colorScheme.primary),
-                        const SizedBox(width: 12),
-                        Text(
-                          _pubertyDate == null
-                              ? 'onboarding.selectDate'.tr()
-                              : DateFormat(
-                                  'MMMM d, yyyy',
-                                ).format(_pubertyDate!),
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ).animate().scale(),
-              ],
-
-              const Spacer(),
-
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 0,
-                ),
-                child: Text(
-                  'onboarding.start'.tr(),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ).animate().fadeIn(delay: 600.ms).moveY(begin: 20, end: 0),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              colorScheme.primary.withValues(alpha: 0.1),
+              const Color(0xFF0F172A),
             ],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Spacer(),
+                Text(
+                  'onboarding.bismillah'.tr(),
+                  style: const TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1,
+                  ),
+                  textAlign: TextAlign.center,
+                ).animate().fadeIn().scale(delay: 200.ms),
+                const SizedBox(height: 12),
+                Text(
+                  'onboarding.subtitle'.tr(),
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ).animate().fadeIn(delay: 400.ms),
+                const SizedBox(height: 60),
+                _buildToggle(colorScheme),
+                const SizedBox(height: 32),
+                _buildInputs(colorScheme),
+                const Spacer(),
+                _buildSubmitButton(colorScheme),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildToggle(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildToggleButton(
+              'onboarding.byYears'.tr(),
+              !_isByDate,
+              () => setState(() => _isByDate = false),
+              colorScheme,
+            ),
+          ),
+          Expanded(
+            child: _buildToggleButton(
+              'onboarding.byDate'.tr(),
+              _isByDate,
+              () => setState(() => _isByDate = true),
+              colorScheme,
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(delay: 600.ms);
+  }
+
+  Widget _buildToggleButton(
+    String label,
+    bool isSelected,
+    VoidCallback onTap,
+    ColorScheme colorScheme,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: 300.ms,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: isSelected ? colorScheme.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: colorScheme.primary.withValues(alpha: 0.2),
+                    blurRadius: 10,
+                  ),
+                ]
+              : [],
+        ),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: isSelected
+                ? Colors.black
+                : Colors.white.withValues(alpha: 0.5),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputs(ColorScheme colorScheme) {
+    if (!_isByDate) {
+      return Column(
+        children: [
+          _buildTextField(
+            controller: _yearsController,
+            label: 'onboarding.yearsHint'.tr(),
+            icon: Icons.history_rounded,
+            colorScheme: colorScheme,
+          ),
+          const SizedBox(height: 16),
+          _buildTextField(
+            controller: _fastingController,
+            label: 'onboarding.fastingYears'.tr(),
+            icon: Icons.wb_sunny_outlined,
+            colorScheme: colorScheme,
+          ),
+        ],
+      ).animate().fadeIn().slideX(begin: 0.1, end: 0);
+    } else {
+      return InkWell(
+        onTap: _pickPubertyDate,
+        borderRadius: BorderRadius.circular(24),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.calendar_today_rounded, color: colorScheme.primary),
+              const SizedBox(width: 16),
+              Text(
+                _pubertyDate == null
+                    ? 'onboarding.selectDate'.tr()
+                    : DateFormat('MMMM d, yyyy').format(_pubertyDate!),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ).animate().fadeIn().slideX(begin: -0.1, end: 0);
+    }
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    required ColorScheme colorScheme,
+  }) {
+    return TextField(
+      controller: controller,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: colorScheme.primary),
+        filled: true,
+        fillColor: colorScheme.surface,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickPubertyDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2010),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Theme.of(context).colorScheme.primary,
+              onPrimary: Colors.black,
+              surface: const Color(0xFF1E293B),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (date != null) setState(() => _pubertyDate = date);
+  }
+
+  Widget _buildSubmitButton(ColorScheme colorScheme) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.primary.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        onPressed: _submit,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: Colors.black,
+          padding: const EdgeInsets.symmetric(vertical: 22),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          'onboarding.start'.tr(),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ).animate().fadeIn(delay: 800.ms).moveY(begin: 20, end: 0);
   }
 }

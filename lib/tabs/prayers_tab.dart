@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../models/kaza_model.dart';
 import '../repositories/kaza_repository.dart';
-import '../widgets/prayer_card.dart';
 import '../widgets/heatmap_widget.dart';
 
 class PrayersTab extends StatefulWidget {
@@ -17,7 +15,6 @@ class PrayersTab extends StatefulWidget {
 
 class _PrayersTabState extends State<PrayersTab> {
   late KazaModel _data;
-  Map<DateTime, int> _history = {};
 
   @override
   void initState() {
@@ -28,265 +25,267 @@ class _PrayersTabState extends State<PrayersTab> {
   void _refreshData() {
     setState(() {
       _data = widget.repository.getKazaData();
-      _history = widget.repository.getHistory();
     });
   }
 
-  void _decrement(PrayerType type) {
-    // Optimistic update
-    setState(() {
-      int newValue = _data.getCount(type) - 1;
-      if (newValue < 0) newValue = 0;
-
-      switch (type) {
-        case PrayerType.fajr:
-          _data = _data.copyWith(fajr: newValue);
-          break;
-        case PrayerType.dhuhr:
-          _data = _data.copyWith(dhuhr: newValue);
-          break;
-        case PrayerType.asr:
-          _data = _data.copyWith(asr: newValue);
-          break;
-        case PrayerType.maghrib:
-          _data = _data.copyWith(maghrib: newValue);
-          break;
-        case PrayerType.isha:
-          _data = _data.copyWith(isha: newValue);
-          break;
-        case PrayerType.witr:
-          _data = _data.copyWith(witr: newValue);
-          break;
-        case PrayerType.fasting:
-          break; // Handled in FastingTab
-      }
-
-      final now = DateTime.now();
-      final key = DateTime(now.year, now.month, now.day);
-      _history[key] = (_history[key] ?? 0) + 1;
-    });
-
-    widget.repository.decrementPrayer(type);
+  Future<void> _decrement(PrayerType type) async {
+    await widget.repository.decrementPrayer(type);
+    _refreshData();
   }
 
-  void _decrementDay() async {
-    setState(() {
-      _data = _data.copyWith(
-        fajr: (_data.fajr - 1).clamp(0, 999999),
-        dhuhr: (_data.dhuhr - 1).clamp(0, 999999),
-        asr: (_data.asr - 1).clamp(0, 999999),
-        maghrib: (_data.maghrib - 1).clamp(0, 999999),
-        isha: (_data.isha - 1).clamp(0, 999999),
-        witr: (_data.witr - 1).clamp(0, 999999),
-      );
-
-      final now = DateTime.now();
-      final key = DateTime(now.year, now.month, now.day);
-      _history[key] = (_history[key] ?? 0) + 6;
-    });
-
+  Future<void> _completeFullDay() async {
     await widget.repository.decrementDay();
-  }
-
-  String get _estimatedCompletion {
-    if (_history.isEmpty) return "Unknown";
-    int total = 0;
-    int days = 0;
-    final now = DateTime.now();
-    for (int i = 0; i < 7; i++) {
-      final d = DateTime(
-        now.year,
-        now.month,
-        now.day,
-      ).subtract(Duration(days: i));
-      if (_history.containsKey(d)) {
-        total += _history[d]!;
-        days++;
-      }
-    }
-    if (total == 0) return "error.selectDate".tr();
-    final avgPerDay = total / (days == 0 ? 1 : days);
-    if (avgPerDay < 0.1) return "error.selectDate".tr();
-
-    final daysRemaining = _data.totalRemaining / avgPerDay;
-    final finishDate = DateTime.now().add(Duration(days: daysRemaining.ceil()));
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return "${months[finishDate.month - 1]} ${finishDate.year}";
+    _refreshData();
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final progress = _data.progress;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _decrementDay,
-        backgroundColor: colorScheme.primary,
-        foregroundColor: Colors.black,
-        icon: const Icon(Icons.calendar_today),
-        label: Text("completedDay".tr()),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xFF1F2937),
-                        const Color(0xFF111827),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.white.withAlpha(13)),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            floating: false,
+            pinned: true,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      colorScheme.primary.withValues(alpha: 0.2),
+                      Colors.transparent,
+                    ],
                   ),
-                  child: Row(
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircularPercentIndicator(
-                        radius: 60.0,
-                        lineWidth: 12.0,
-                        animation: true,
-                        percent: progress,
-                        center: Text(
-                          "${(progress * 100).toStringAsFixed(1)}%",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
+                      Text(
+                        'prayers.title'.tr(),
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
                         ),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: colorScheme.primary,
-                        backgroundColor: colorScheme.surface,
                       ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "totalProtocol".tr(),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "${_data.totalRemaining} ${_data.totalRemaining == 1 ? 'prayer' : 'remaining'.tr()}",
-                              style: TextStyle(color: Colors.grey[400]),
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: colorScheme.primary.withAlpha(26),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                "finishBy".tr(args: [_estimatedCompletion]),
-                                style: TextStyle(
-                                  color: colorScheme.primary,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
+                      Text(
+                        'prayers.subtitle'.tr(),
+                        style: TextStyle(
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                          fontSize: 16,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ).animate().slideY(begin: -0.2, end: 0).fadeIn(),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildProgressHeader(colorScheme),
+                  const SizedBox(height: 32),
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 1.1,
+                    children: [
+                      _buildPrayerCard(PrayerType.fajr, 'prayers.fajr'.tr()),
+                      _buildPrayerCard(PrayerType.dhuhr, 'prayers.dhuhr'.tr()),
+                      _buildPrayerCard(PrayerType.asr, 'prayers.asr'.tr()),
+                      _buildPrayerCard(
+                        PrayerType.maghrib,
+                        'prayers.maghrib'.tr(),
+                      ),
+                      _buildPrayerCard(PrayerType.isha, 'prayers.isha'.tr()),
+                      _buildPrayerCard(PrayerType.witr, 'prayers.witr'.tr()),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  _buildFullDayAction(colorScheme),
+                  const SizedBox(height: 32),
+                  HeatmapWidget(repository: widget.repository),
+                  const SizedBox(height: 32),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-              const SizedBox(height: 20),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.85,
-                  children: [
-                    PrayerCard(
-                      title: 'fajr'.tr(),
-                      count: _data.fajr,
-                      color: Colors.orangeAccent,
-                      onTap: () => _decrement(PrayerType.fajr),
-                    ),
-                    PrayerCard(
-                      title: 'dhuhr'.tr(),
-                      count: _data.dhuhr,
-                      color: Colors.yellowAccent,
-                      onTap: () => _decrement(PrayerType.dhuhr),
-                    ),
-                    PrayerCard(
-                      title: 'asr'.tr(),
-                      count: _data.asr,
-                      color: Colors.orange,
-                      onTap: () => _decrement(PrayerType.asr),
-                    ),
-                    PrayerCard(
-                      title: 'maghrib'.tr(),
-                      count: _data.maghrib,
-                      color: Colors.redAccent,
-                      onTap: () => _decrement(PrayerType.maghrib),
-                    ),
-                    PrayerCard(
-                      title: 'isha'.tr(),
-                      count: _data.isha,
-                      color: Colors.indigoAccent,
-                      onTap: () => _decrement(PrayerType.isha),
-                    ),
-                    PrayerCard(
-                      title: 'witr'.tr(),
-                      count: _data.witr,
-                      color: Colors.purpleAccent,
-                      onTap: () => _decrement(PrayerType.witr),
-                    ),
-                  ].animate(interval: 50.ms).fadeIn().scale(),
+  Widget _buildProgressHeader(ColorScheme colorScheme) {
+    final progress = _data.totalRemaining > 0 ? 0.0 : 1.0; // Placeholder logic
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'stats.totalProgress'.tr(),
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _data.totalRemaining.toString(),
+                  style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'prayers.subtitle'.tr(),
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withValues(alpha: 0.4),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: 80,
+                width: 80,
+                child: CircularProgressIndicator(
+                  value: progress, // Use the progress variable
+                  strokeWidth: 8,
+                  backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+                  strokeCap: StrokeCap.round,
                 ),
               ),
+              const Icon(Icons.auto_graph, size: 24),
+            ],
+          ),
+        ],
+      ),
+    ).animate().fadeIn().slideX(begin: -0.1, end: 0);
+  }
 
-              const SizedBox(height: 30),
+  Widget _buildPrayerCard(PrayerType type, String label) {
+    final count = _data.getCount(type);
+    final colorScheme = Theme.of(context).colorScheme;
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: HeatmapWidget(history: _history),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => _decrement(type),
+        borderRadius: BorderRadius.circular(24),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-
-              const SizedBox(height: 100),
+              const SizedBox(height: 8),
+              Text(
+                count.toString(),
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '-1',
+                  style: TextStyle(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-    );
+    ).animate().scale(delay: (type.index * 50).ms);
+  }
+
+  Widget _buildFullDayAction(ColorScheme colorScheme) {
+    return InkWell(
+      onTap: _completeFullDay,
+      borderRadius: BorderRadius.circular(24),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [colorScheme.primary, colorScheme.secondary],
+          ),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.primary.withValues(alpha: 0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.done_all, color: Colors.black),
+            const SizedBox(width: 12),
+            const Text(
+              "Complete Full Day",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).animate().fadeIn(delay: 500.ms).moveY(begin: 20, end: 0);
   }
 }

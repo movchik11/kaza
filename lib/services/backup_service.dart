@@ -29,7 +29,7 @@ class BackupService {
     final file = File('${directory.path}/kaza_backup.json');
     await file.writeAsString(jsonString);
 
-    // Reverting to Share.shareXFiles as SharePlus.shareXFiles is not defined
+    // Use Share.shareXFiles (deprecated but functional in this version)
     await Share.shareXFiles([XFile(file.path)], text: 'Kaza Backup File');
   }
 

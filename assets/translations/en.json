@@ -1,34 +1,54 @@
 {
     "title": "Kaza Tracker",
-    "totalProtocol": "Total Progress",
-    "remaining": "prayers remaining",
-    "keepGoing": "Keep going!",
-    "finishBy": "Finish by: {}",
-    "fajr": "Fajr",
-    "dhuhr": "Dhuhr",
-    "asr": "Asr",
-    "maghrib": "Maghrib",
-    "isha": "Isha",
-    "witr": "Witr",
-    "completedDay": "Completed Full Day (+6)",
-    "activityHistory": "Activity History",
-    "onboarding": {
-        "bismillah": "Bismillah",
-        "subtitle": "Let's calculate your missed prayers so you can start clearing them today.",
-        "byYears": "By Years",
-        "byDate": "By Date",
-        "yearsHint": "e.g. 2.5",
-        "selectDate": "Select Puberty Date",
-        "start": "Start Journey"
-    },
-    "error": {
-        "selectDate": "Please select a date",
-        "enterYears": "Please enter years"
-    },
     "nav": {
         "prayers": "Prayers",
         "fasting": "Fasting",
         "settings": "Settings"
     },
-    "fastingYears": "Missed Fasts (Years)"
+    "prayers": {
+        "fajr": "Fajr",
+        "dhuhr": "Dhuhr",
+        "asr": "Asr",
+        "maghrib": "Maghrib",
+        "isha": "Isha",
+        "witr": "Witr",
+        "title": "Prayer Debt",
+        "subtitle": "Track your missed prayers"
+    },
+    "fasting": {
+        "title": "Missed Fasts",
+        "subtitle": "Track your missed Ramadan fasts",
+        "completeDay": "Complete Today's Fast",
+        "remaining": "Days Remaining"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "reminders": "Daily Reminders",
+        "reminderTime": "Reminder Time",
+        "backup": "Data Backup",
+        "export": "Export Data",
+        "import": "Import Data",
+        "importSuccess": "Data imported successfully. Please restart app.",
+        "theme": "Appearance"
+    },
+    "onboarding": {
+        "bismillah": "Bismillah",
+        "subtitle": "Let's start your journey of catching up prayers",
+        "byYears": "By Years",
+        "byDate": "By Date",
+        "yearsHint": "Years missed",
+        "fastingYears": "Missed Fasts (Years)",
+        "selectDate": "Select Puberty Date",
+        "start": "Get Started"
+    },
+    "error": {
+        "selectDate": "Please select a date",
+        "enterYears": "Please enter years"
+    },
+    "stats": {
+        "activityHistory": "Activity History",
+        "estCompletion": "Estimated Completion",
+        "totalProgress": "Total Progress"
+    }
 }

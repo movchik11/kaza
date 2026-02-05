@@ -1,34 +1,54 @@
 {
-    "title": "Kaza Yzarlaýjy",
-    "totalProtocol": "Jemi Ösüş",
-    "remaining": "namaz galdy",
-    "keepGoing": "Dowam et!",
-    "finishBy": "Tamamlanjak wagty: {}",
-    "fajr": "Ertir",
-    "dhuhr": "Öýle",
-    "asr": "Ikindi",
-    "maghrib": "Agşam",
-    "isha": "Ýassy",
-    "witr": "Witr",
-    "completedDay": "1 Gün Doly (+6)",
-    "activityHistory": "Işjeňlik Taryhy",
-    "onboarding": {
-        "bismillah": "Bismilläh",
-        "subtitle": "Geliň, gaza namazlaryny hasaplalyn we şu günden başlap olary doldurylin.",
-        "byYears": "Ýyllar boýunça",
-        "byDate": "Sene boýunça",
-        "yearsHint": "mysal 2.5",
-        "selectDate": "Kämillik ýaşy senesi",
-        "start": "Başlamak"
-    },
-    "error": {
-        "selectDate": "Senäni saýlaň",
-        "enterYears": "Ýyllary giriziň"
-    },
+    "title": "Kaza Treker",
     "nav": {
         "prayers": "Namazlar",
         "fasting": "Oraza",
         "settings": "Sazlamalar"
     },
-    "fastingYears": "Sypdyrylan Orazalar (Ýyl)"
+    "prayers": {
+        "fajr": "Bomdad",
+        "dhuhr": "Öýle",
+        "asr": "Preşin",
+        "maghrib": "Agşam",
+        "isha": "Ýassy",
+        "witr": "Witr",
+        "title": "Kaza Namazlar",
+        "subtitle": "Galdyrylan namazlaryňyzy hasaplaň"
+    },
+    "fasting": {
+        "title": "Galdyrylan Orazalar",
+        "subtitle": "Ramazan orazalaryňyzy hasaplaň",
+        "completeDay": "Bugünki orazany tamamla",
+        "remaining": "Gün galdy"
+    },
+    "settings": {
+        "title": "Sazlamalar",
+        "language": "Dil",
+        "reminders": "Gündelik ýatlatmalar",
+        "reminderTime": "Ýatlatma wagty",
+        "backup": "Ätiýaçlyk nusga",
+        "export": "Maglumatlary çykarmak",
+        "import": "Maglumatlary girizmek",
+        "importSuccess": "Maglumatlar üstünlikli girizildi. Programmany täzeden açmagyňyzy haýyş edýäris.",
+        "theme": "Görünüş"
+    },
+    "onboarding": {
+        "bismillah": "Bismillah",
+        "subtitle": "Namazlaryňyzyň kazasyny bitirip başlaň",
+        "byYears": "Ýyllar boýunça",
+        "byDate": "Sene boýunça",
+        "yearsHint": "Galdyrylan ýyllar",
+        "fastingYears": "Galdyrylan orazalar (ýyl)",
+        "selectDate": "Kämillik ýaşyna ýeten senäňiz",
+        "start": "Başla"
+    },
+    "error": {
+        "selectDate": "Sene saýlaň",
+        "enterYears": "Ýyllary giriziň"
+    },
+    "stats": {
+        "activityHistory": "Işjeňlik taryhy",
+        "estCompletion": "Tahminy tamamlanjak wagty",
+        "totalProgress": "Umumy öňegidişlik"
+    }
 }
