@@ -1,45 +1,71 @@
 {
-    "title": "Kaza Treker",
+    "title": "Kaza Hasabçy",
     "nav": {
+        "times": "Wagtlar",
         "prayers": "Namazlar",
         "fasting": "Oraza",
+        "tasbih": "Tesbih",
+        "stats": "Statistika",
+        "library": "Kitaphana",
         "settings": "Sazlamalar"
     },
     "prayers": {
-        "fajr": "Bomdad",
+        "fajr": "Ertir",
         "dhuhr": "Öýle",
-        "asr": "Preşin",
+        "asr": "Ikindi",
         "maghrib": "Agşam",
         "isha": "Ýassy",
-        "witr": "Witr",
-        "title": "Kaza Namazlar",
-        "subtitle": "Galdyrylan namazlaryňyzy hasaplaň"
+        "witr": "Witir",
+        "title": "Geçirilen namazlar",
+        "subtitle": "Geçirilen namazlaryňyzy yzarlaň",
+        "completeDay": "Doly güni ýap",
+        "modeKaza": "Kaza (Bergi)",
+        "modeSunnah": "Sünnet / Nafl",
+        "nafl": "Nafl",
+        "sunnahSubtitle": "Şu günki meýletin namazlaryňyzy yzarlaň"
     },
     "fasting": {
-        "title": "Galdyrylan Orazalar",
-        "subtitle": "Ramazan orazalaryňyzy hasaplaň",
-        "completeDay": "Bugünki orazany tamamla",
-        "remaining": "Gün galdy"
+        "title": "Geçirilen orazalar",
+        "subtitle": "Geçirilen Remezan orazalaryňyzy yzarlaň",
+        "completeDay": "Şu günki orazany ýap",
+        "remaining": "Galan günler"
     },
     "settings": {
         "title": "Sazlamalar",
         "language": "Dil",
+        "location": "Ýerleşýän ýeriň",
+        "gender": "Ulanyjy",
+        "ageStarted": "Namaza başlan ýaşyňyz",
         "reminders": "Gündelik ýatlatmalar",
         "reminderTime": "Ýatlatma wagty",
-        "backup": "Ätiýaçlyk nusga",
-        "export": "Maglumatlary çykarmak",
-        "import": "Maglumatlary girizmek",
-        "importSuccess": "Maglumatlar üstünlikli girizildi. Programmany täzeden açmagyňyzy haýyş edýäris.",
-        "theme": "Görünüş"
+        "backup": "Ätiýaçlyk nusgasy",
+        "export": "Maglumatlary eksport et",
+        "import": "Maglumatlary import et",
+        "importSuccess": "Maglumatlar üstünlikli import edildi. Täzeden açyň.",
+        "appearance": "Bezeg",
+        "theme": "Tema",
+        "themeColor": "Akzent reňki",
+        "lightTheme": "Ýagty",
+        "darkTheme": "Garaňky",
+        "systemTheme": "Ulgam",
+        "interaction": "Täsirleşme",
+        "sound": "Ses effektleri",
+        "vibration": "Wibrasiýa seslenmesi"
     },
     "onboarding": {
-        "bismillah": "Bismillah",
-        "subtitle": "Namazlaryňyzyň kazasyny bitirip başlaň",
+        "bismillah": "Bismilla",
+        "subtitle": "Geçirilen namazlaryňyzy doldurma ýoluňyza başlaň",
+        "gender": "Jynsyňyz",
+        "male": "Erkek",
+        "female": "Aýal",
+        "currentAge": "Häzirki ýaşyňyz",
+        "ageStarted": "Namaza başlan ýaşyňyz",
+        "invalidAge": "Nädogry ýaş",
         "byYears": "Ýyllar boýunça",
         "byDate": "Sene boýunça",
-        "yearsHint": "Galdyrylan ýyllar",
-        "fastingYears": "Galdyrylan orazalar (ýyl)",
-        "selectDate": "Kämillik ýaşyna ýeten senäňiz",
+        "yearsHint": "Geçirilen ýyllar",
+        "fastingYears": "Geçirilen orazalar (ýyl)",
+        "selectDate": "Kämillik ýaşy senesini saýlaň",
         "start": "Başla"
     },
     "error": {
@@ -48,7 +74,97 @@
     },
     "stats": {
         "activityHistory": "Işjeňlik taryhy",
-        "estCompletion": "Tahminy tamamlanjak wagty",
-        "totalProgress": "Umumy öňegidişlik"
+        "estCompletion": "Takmynan tamamlama senesi",
+        "totalProgress": "Umumy ösüş",
+        "dailyAverage": "Gündelik ortaça",
+        "weeklyActivity": "Hepdelik işjeňlik",
+        "prayersPerDay": "namaz/gün"
+    },
+    "bulk_add": {
+        "title": "Çalt goşmak",
+        "custom": "Hususy mukdar",
+        "enter_amount": "Mukdary giriziň",
+        "add": "Goş"
+    },
+    "confirmation": {
+        "title": "Tassyklaň",
+        "completeDay": "Ýerine ýetirildi diýip bellemek isleýärsiňizmi?"
+    },
+    "privacy": {
+        "title": "Gizlinlik",
+        "lock": "Biometrika gulpy",
+        "lockSubtitle": "Barmak yzy ýa-da ýüz arkaly gorag"
+    },
+    "library": {
+        "title": "Kitaphana",
+        "articles": "Makalalar",
+        "duas": "Dogalar",
+        "dailyVerse": "Günüň aýaty",
+        "fiqh": "Fikh",
+        "importance_title": "Namazyň ähmiýeti",
+        "importance_content": "Namaz (Salah) Yslamyň ikinji rüküni we iň möhüm ybadat amalydyr. Kyýamat gününde möminiň birinji soraljak zady namazdyr. Namaz bende bilen Allanyň arasynda göni aragatnaşyk gurýar.",
+        "qaza_rules_title": "Kaza kadalary",
+        "qaza_rules_content": "Eger namaz geçirilen bolsa, ol mümkin boldugyça çalt doldurylmaly bergidir (Kaza). Alymlaryň köpüsiniň pikiriçe, kaza namazlary sanalsa tertip bilen, köp bolsaislendik wagt (gün dogan, gün iň ýokary nokadynda we gün ýaşýan wagtyndan başga) okalmalydyr."
+    },
+    "common": {
+        "cancel": "Ýatyr",
+        "confirm": "Tassykla",
+        "save": "Ýatda sakla",
+        "delete": "Öçür",
+        "noData": "Häzirçe maglumat ýok"
+    },
+    "calendar": {
+        "upcoming": "Ýakynda",
+        "days": "gün",
+        "today": "Şu gün",
+        "months": {
+            "1": "Muharram",
+            "2": "Safar",
+            "3": "Rebiül-ewwel",
+            "4": "Rebiül-ahyr",
+            "5": "Jemaziýel-ewwel",
+            "6": "Jemaziýel-ahyr",
+            "7": "Rejep",
+            "8": "Şaban",
+            "9": "Remezan",
+            "10": "Şöwwal",
+            "11": "Zül-kade",
+            "12": "Zül-hijje"
+        },
+        "holidays": {
+            "ramadan_start": "Remezan aýynyň başy",
+            "eid_al_fitr": "Oraza baýramy",
+            "arafah": "Arafa güni",
+            "eid_al_adha": "Gurban baýramy",
+            "new_year": "Yslam Täze Ýyly",
+            "ashura": "Aşura güni",
+            "mawlid": "Möwlüd gijesi"
+        }
+    },
+    "fasting_rules": {
+        "suhoorEnds": "Sähärlik gutarýar",
+        "iftarBegins": "Agyz açar",
+        "duasTitle": "Oraza dogalary",
+        "suhoorDuaTitle": "Oraza niýeti (Sähärlik dogasy)",
+        "suhoorDuaArabic": "نَوَيْتُ أَنْ أَصُومَ صَوْمَ شَهْرِ رَمَضَانَ مِنَ الْفَجْرِ إِلَى الْمَغْرِبِ خَالِصًا لِلَّهِ تَعَالَى",
+        "suhoorDuaTransliteration": "Neweýtu en asuma sawma şähri ramadana minel-fajri ilel-magribi halisan lillähita'ala",
+        "suhoorDuaTranslation": "Niýet etdim şu günki Remezan orazasyny tutmaga, jemi kemliklerden päk bolan Allatagala üçin.",
+        "iftarDuaTitle": "Agyz açar dogasy (Iftar)",
+        "iftarDuaArabic": "اللَّهُمَّ لَكَ صُمْتُ، وَعَلَى رِزْقِكَ أَفْطَرْتُ، فَتَقَبَّلْ مِنِّي، إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ",
+        "iftarDuaTransliteration": "Allahümme leke sumtu we bika amentu we aleýke tewekkeltu we a'la ryzkyka eftartu.",
+        "iftarDuaTranslation": "Eý, Allahym! Seniň rzalygyň üçin oraza tutdum. Saňa iman etdim. Saňa bil bagladym. Beren rysgyň bilen-de agzymy açdym.",
+        "rulesTitle": "Oraza düzgünleri",
+        "rulesBody": "• Oraza tutmak kämillik ýaşyna ýeten, akyly ýerindäki, sagdyn, ýolagçy bolmadyk her bir musulmana parzdyr.\n\n• Orazany näme bozýar (kazasy hökmän):\n1. Biliň bilen iýmek-içmek.\n2. Jynsy gatnaşykda bolmak.\n3. Bilkastlaýyn gusmak.\n4. Aýbaşy (haýz) we çaga dogrumyndan soňky gan (nifas).\n\n• Orazadan boşadylanlar (ýöne soň kaza etmeli):\nHassalar, ýolagçylar, göwreli we çaga emdirýän aýallar (saglygyna howp bar bolsa), haýz we nifas döwründäki aýallar.",
+        "forbiddenTitle": "Gadagan günler",
+        "forbiddenBody": "Şu günlerde oraza tutmak berk gadagandyr (haram):\n\n1. Oraza baýramy güni (Şöwwal aýynyň 1-i).\n2. Gurban baýramy güni (Zül-hijje aýynyň 10-y).\n3. Teşrik günleri (Zül-hijje aýynyň 11, 12 we 13-nji günleri)."
+    },
+    "tasbih": {
+        "title": "Tesbih",
+        "hint": "Sanamak üçin ekrana basyň",
+        "reset": "Hasaplaýjyny arassala",
+        "target": "Maksat:",
+        "laps": "Aýlawlar:",
+        "customTarget": "Öz maksadyň",
+        "enterTarget": "Maksady giriziň"
     }
 }

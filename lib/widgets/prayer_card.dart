@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../utils/interaction_utils.dart';
 
 class PrayerCard extends StatelessWidget {
   final String title;
@@ -36,11 +36,7 @@ class PrayerCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
-            try {
-              HapticFeedback.lightImpact();
-            } catch (_) {
-              // Ignore haptic errors on unsupported platforms
-            }
+            InteractionUtils.haptic(context);
             onTap();
           },
           child: Padding(

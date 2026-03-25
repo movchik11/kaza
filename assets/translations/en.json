@@ -1,8 +1,12 @@
 {
     "title": "Kaza Tracker",
     "nav": {
+        "times": "Times",
         "prayers": "Prayers",
         "fasting": "Fasting",
+        "tasbih": "Tasbih",
+        "stats": "Stats",
+        "library": "Library",
         "settings": "Settings"
     },
     "prayers": {
@@ -13,7 +17,12 @@
         "isha": "Isha",
         "witr": "Witr",
         "title": "Prayer Debt",
-        "subtitle": "Track your missed prayers"
+        "subtitle": "Track your missed prayers",
+        "completeDay": "Complete Full Day",
+        "modeKaza": "Kaza (Debt)",
+        "modeSunnah": "Sunnah / Nafl",
+        "nafl": "Nafl",
+        "sunnahSubtitle": "Track your voluntary prayers today"
     },
     "fasting": {
         "title": "Missed Fasts",
@@ -30,7 +39,20 @@
         "export": "Export Data",
         "import": "Import Data",
         "importSuccess": "Data imported successfully. Please restart app.",
-        "theme": "Appearance"
+        "appearance": "Appearance",
+        "theme": "Theme",
+        "themeColor": "Accent Color",
+        "lightTheme": "Light",
+        "darkTheme": "Dark",
+        "systemTheme": "System",
+        "dynamicTheme": "Dynamic Atmosphere",
+        "dynamicThemeSubtitle": "Adapt theme to current time & prayer",
+        "reminderOffset": "Reminder Offset",
+        "silentHours": "Silent Hours",
+        "minutes": "min",
+        "interaction": "Interaction",
+        "sound": "Sound Effects",
+        "vibration": "Haptic Feedback"
     },
     "onboarding": {
         "bismillah": "Bismillah",
@@ -49,6 +71,42 @@
     "stats": {
         "activityHistory": "Activity History",
         "estCompletion": "Estimated Completion",
-        "totalProgress": "Total Progress"
+        "totalProgress": "Total Progress",
+        "dailyAverage": "Daily Average",
+        "weeklyActivity": "Weekly Activity",
+        "prayersPerDay": "prayers/day"
+    },
+    "bulk_add": {
+        "title": "Quick Add",
+        "custom": "Custom Amount",
+        "enter_amount": "Enter custom amount",
+        "add": "Add"
+    },
+    "confirmation": {
+        "title": "Confirm Action",
+        "completeDay": "Are you sure you want to mark this complete?"
+    },
+    "privacy": {
+        "title": "Privacy",
+        "lock": "Biometric Lock",
+        "lockSubtitle": "Protect your data with fingerprint/face ID"
+    },
+    "library": {
+        "title": "Library",
+        "articles": "Articles",
+        "duas": "Supplications",
+        "dailyVerse": "Daily Verse",
+        "fiqh": "Fiqh",
+        "importance_title": "Importance of Prayer",
+        "importance_content": "Prayer (Salah) is the second pillar of Islam and the most important act of worship. It is the first thing a believer will be questioned about on the Day of Judgment. Salah establishes a direct connection between the servant and Allah.",
+        "qaza_rules_title": "Rules of Qaza",
+        "qaza_rules_content": "If a prayer is missed, it becomes a debt (Qaza) that must be fulfilled as soon as possible. According to most scholars, Qaza prayers should be offered in order if they are few, but once they become many, one can focus on fulfilling them at any time except during forbidden times (sunrise, zenith, sunset)."
+    },
+    "common": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "save": "Save",
+        "delete": "Delete",
+        "noData": "No data available yet"
     }
 }

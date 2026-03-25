@@ -7,6 +7,8 @@ environment:
   sdk: ^3.10.4
 
 dependencies:
+  equatable: ^2.0.7
+  flutter_bloc: ^9.1.0
   easy_localization: ^3.0.8
   file_picker: ^10.3.10
   flutter:
@@ -24,13 +26,29 @@ dependencies:
   permission_handler: ^12.0.1
   share_plus: ^12.0.1
   timezone: ^0.10.1
+  confetti: ^0.7.0
+  fl_chart: ^0.70.2
+  home_widget: ^0.9.0
+  # New Dependencies
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  adhan: ^2.0.0+1
+  pdf: ^3.11.1
+  printing: ^5.13.2
+  geolocator: ^14.0.2
+  table_calendar: ^3.2.0
+  hijri: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  build_runner: ^2.4.15
+  freezed: ^2.5.8
+  json_serializable: ^6.9.4
 
 flutter:
   uses-material-design: true
   assets:
     - assets/translations/
+    - assets/data/

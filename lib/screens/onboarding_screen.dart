@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/kaza_model.dart';
 import '../repositories/kaza_repository.dart';
+import '../cubit/settings_cubit.dart';
 import 'home_screen.dart';
 import '../services/notification_service.dart';
+import '../services/interaction_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   final KazaRepository repository;
@@ -20,39 +23,25 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final _yearsController = TextEditingController();
-  final _fastingController = TextEditingController();
-  DateTime? _pubertyDate;
-  bool _isByDate = false;
+  final _currentAgeController = TextEditingController();
+  final _startedAgeController = TextEditingController(text: '12');
+  String _gender = 'male';
 
   void _submit() async {
-    int totalDays = 0;
+    InteractionService.tap();
+    final currentAge = int.tryParse(_currentAgeController.text) ?? 0;
+    final startedAge = int.tryParse(_startedAgeController.text) ?? 0;
 
-    if (_isByDate) {
-      if (_pubertyDate == null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('error.selectDate'.tr())));
-        return;
-      }
-      final now = DateTime.now();
-      totalDays = now.difference(_pubertyDate!).inDays;
-      if (totalDays < 0) totalDays = 0;
-    } else {
-      if (_yearsController.text.isEmpty) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('error.enterYears'.tr())));
-        return;
-      }
-      final years =
-          double.tryParse(_yearsController.text.replaceAll(',', '.')) ?? 0;
-      totalDays = (years * 365.25).ceil();
+    if (currentAge == 0 || startedAge == 0 || currentAge <= startedAge) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('onboarding.invalidAge'.tr())));
+      return;
     }
 
-    final fastingYears =
-        double.tryParse(_fastingController.text.replaceAll(',', '.')) ?? 0;
-    final totalFasting = (fastingYears * 30).ceil();
+    final missedYears = currentAge - startedAge;
+    int totalDays = (missedYears * 365.25).ceil();
+    int totalFasting = (missedYears * 30).ceil();
 
     final model = KazaModel(
       fajr: totalDays,
@@ -65,18 +54,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       initialFasting: totalFasting,
     );
 
+    final settingsCubit = context.read<SettingsCubit>();
+
     await widget.repository.setInitialData(model);
 
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(
-            repository: widget.repository,
-            notificationService: widget.notificationService,
-          ),
+    if (!mounted) return;
+
+    await settingsCubit.saveProfile(
+      gender: _gender,
+      ageStartedPraying: startedAge,
+    );
+
+    if (!context.mounted) return;
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => HomeScreen(
+          repository: widget.repository,
+          notificationService: widget.notificationService,
         ),
-      );
-    }
+      ),
+    );
   }
 
   @override
@@ -87,46 +85,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              colorScheme.primary.withValues(alpha: 0.1),
-              const Color(0xFF0F172A),
+              colorScheme.primary.withValues(alpha: 0.15),
+              const Color(0xFF0B1120),
             ],
           ),
         ),
         child: SafeArea(
-          child: Padding(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(28.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Spacer(),
-                Text(
-                  'onboarding.bismillah'.tr(),
-                  style: const TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -1,
-                  ),
-                  textAlign: TextAlign.center,
-                ).animate().fadeIn().scale(delay: 200.ms),
-                const SizedBox(height: 12),
-                Text(
-                  'onboarding.subtitle'.tr(),
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.5),
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.center,
-                ).animate().fadeIn(delay: 400.ms),
-                const SizedBox(height: 60),
-                _buildToggle(colorScheme),
-                const SizedBox(height: 32),
-                _buildInputs(colorScheme),
-                const Spacer(),
-                _buildSubmitButton(colorScheme),
-              ],
+            child: SizedBox(
+              height:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom -
+                  56,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Spacer(flex: 2),
+                  Text(
+                    'onboarding.bismillah'.tr(),
+                    style: const TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ).animate().fadeIn().scale(delay: 200.ms),
+                  const SizedBox(height: 12),
+                  Text(
+                    'onboarding.subtitle'.tr(),
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.5),
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ).animate().fadeIn(delay: 400.ms),
+                  const Spacer(flex: 3),
+                  _buildGenderSelect(colorScheme),
+                  const SizedBox(height: 24),
+                  _buildInputs(colorScheme),
+                  const Spacer(flex: 4),
+                  _buildSubmitButton(colorScheme),
+                ],
+              ),
             ),
           ),
         ),
@@ -134,34 +139,65 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildToggle(ColorScheme colorScheme) {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildToggleButton(
-              'onboarding.byYears'.tr(),
-              !_isByDate,
-              () => setState(() => _isByDate = false),
-              colorScheme,
+  Widget _buildGenderSelect(ColorScheme colorScheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 8),
+          child: Text(
+            'onboarding.gender'.tr(),
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.5),
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Expanded(
-            child: _buildToggleButton(
-              'onboarding.byDate'.tr(),
-              _isByDate,
-              () => setState(() => _isByDate = true),
-              colorScheme,
-            ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
           ),
-        ],
-      ),
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildToggleButton(
+                  'onboarding.male'.tr(),
+                  _gender == 'male',
+                  () {
+                    InteractionService.tap();
+                    setState(() {
+                      _gender = 'male';
+                      if (_startedAgeController.text == '9') {
+                        _startedAgeController.text = '12';
+                      }
+                    });
+                  },
+                  colorScheme,
+                ),
+              ),
+              Expanded(
+                child: _buildToggleButton(
+                  'onboarding.female'.tr(),
+                  _gender == 'female',
+                  () {
+                    InteractionService.tap();
+                    setState(() {
+                      _gender = 'female';
+                      if (_startedAgeController.text == '12') {
+                        _startedAgeController.text = '9';
+                      }
+                    });
+                  },
+                  colorScheme,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     ).animate().fadeIn(delay: 600.ms);
   }
 
@@ -203,54 +239,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildInputs(ColorScheme colorScheme) {
-    if (!_isByDate) {
-      return Column(
-        children: [
-          _buildTextField(
-            controller: _yearsController,
-            label: 'onboarding.yearsHint'.tr(),
-            icon: Icons.history_rounded,
-            colorScheme: colorScheme,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _fastingController,
-            label: 'onboarding.fastingYears'.tr(),
-            icon: Icons.wb_sunny_outlined,
-            colorScheme: colorScheme,
-          ),
-        ],
-      ).animate().fadeIn().slideX(begin: 0.1, end: 0);
-    } else {
-      return InkWell(
-        onTap: _pickPubertyDate,
-        borderRadius: BorderRadius.circular(24),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.calendar_today_rounded, color: colorScheme.primary),
-              const SizedBox(width: 16),
-              Text(
-                _pubertyDate == null
-                    ? 'onboarding.selectDate'.tr()
-                    : DateFormat('MMMM d, yyyy').format(_pubertyDate!),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+    return Column(
+      children: [
+        _buildTextField(
+          controller: _currentAgeController,
+          label: 'onboarding.currentAge'.tr(),
+          icon: Icons.person_outline,
+          colorScheme: colorScheme,
         ),
-      ).animate().fadeIn().slideX(begin: -0.1, end: 0);
-    }
+        const SizedBox(height: 16),
+        _buildTextField(
+          controller: _startedAgeController,
+          label: 'onboarding.ageStarted'.tr(),
+          icon: Icons.history_edu,
+          colorScheme: colorScheme,
+        ),
+      ],
+    ).animate().fadeIn().slideX(begin: 0.1, end: 0);
   }
 
   Widget _buildTextField({
@@ -261,7 +266,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }) {
     return TextField(
       controller: controller,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      keyboardType: TextInputType.number,
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         labelText: label,
@@ -278,28 +283,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _pickPubertyDate() async {
-    final date = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2010),
-      firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: Theme.of(context).colorScheme.primary,
-              onPrimary: Colors.black,
-              surface: const Color(0xFF1E293B),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (date != null) setState(() => _pubertyDate = date);
   }
 
   Widget _buildSubmitButton(ColorScheme colorScheme) {

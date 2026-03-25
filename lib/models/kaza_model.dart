@@ -1,114 +1,76 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
+
+part 'kaza_model.freezed.dart';
+part 'kaza_model.g.dart';
+
 enum PrayerType { fajr, dhuhr, asr, maghrib, isha, witr, fasting }
 
-class KazaModel {
-  final int fajr;
-  final int dhuhr;
-  final int asr;
-  final int maghrib;
-  final int isha;
-  final int witr;
-  final int fasting;
+@freezed
+class KazaModel with _$KazaModel {
+  const factory KazaModel({
+    @Default(0) int fajr,
+    @Default(0) int dhuhr,
+    @Default(0) int asr,
+    @Default(0) int maghrib,
+    @Default(0) int isha,
+    @Default(0) int witr,
+    @Default(0) int fasting,
 
-  // Initial counts to calculate progress
-  final int initialFajr;
-  final int initialDhuhr;
-  final int initialAsr;
-  final int initialMaghrib;
-  final int initialIsha;
-  final int initialWitr;
-  final int initialFasting;
+    // Sunnah & Nafl (Daily counts)
+    @Default(0) int sunnahFajr,
+    @Default(0) int sunnahDhuhr,
+    @Default(0) int sunnahAsr,
+    @Default(0) int sunnahMaghrib,
+    @Default(0) int sunnahIsha,
+    @Default(0) int nafl,
 
-  const KazaModel({
-    this.fajr = 0,
-    this.dhuhr = 0,
-    this.asr = 0,
-    this.maghrib = 0,
-    this.isha = 0,
-    this.witr = 0,
-    this.fasting = 0,
-    this.initialFajr = 0,
-    this.initialDhuhr = 0,
-    this.initialAsr = 0,
-    this.initialMaghrib = 0,
-    this.initialIsha = 0,
-    this.initialWitr = 0,
-    this.initialFasting = 0,
-  });
+    // Initial counts to calculate progress
+    @Default(0) int initialFajr,
+    @Default(0) int initialDhuhr,
+    @Default(0) int initialAsr,
+    @Default(0) int initialMaghrib,
+    @Default(0) int initialIsha,
+    @Default(0) int initialWitr,
+    @Default(0) int initialFasting,
 
-  KazaModel copyWith({
-    int? fajr,
-    int? dhuhr,
-    int? asr,
-    int? maghrib,
-    int? isha,
-    int? witr,
-    int? fasting,
-    int? initialFajr,
-    int? initialDhuhr,
-    int? initialAsr,
-    int? initialMaghrib,
-    int? initialIsha,
-    int? initialWitr,
-    int? initialFasting,
-  }) {
-    return KazaModel(
-      fajr: fajr ?? this.fajr,
-      dhuhr: dhuhr ?? this.dhuhr,
-      asr: asr ?? this.asr,
-      maghrib: maghrib ?? this.maghrib,
-      isha: isha ?? this.isha,
-      witr: witr ?? this.witr,
-      fasting: fasting ?? this.fasting,
-      initialFajr: initialFajr ?? this.initialFajr,
-      initialDhuhr: initialDhuhr ?? this.initialDhuhr,
-      initialAsr: initialAsr ?? this.initialAsr,
-      initialMaghrib: initialMaghrib ?? this.initialMaghrib,
-      initialIsha: initialIsha ?? this.initialIsha,
-      initialWitr: initialWitr ?? this.initialWitr,
-      initialFasting: initialFasting ?? this.initialFasting,
-    );
-  }
+    @Default(0) int currentStreak,
+    @Default(0) int bestStreak,
+    String? lastActivityDate, // Store as ISO string
+    @Default([]) List<String> achievements,
 
-  Map<String, dynamic> toMap() {
-    return {
-      'fajr': fajr,
-      'dhuhr': dhuhr,
-      'asr': asr,
-      'maghrib': maghrib,
-      'isha': isha,
-      'witr': witr,
-      'fasting': fasting,
-      'initialFajr': initialFajr,
-      'initialDhuhr': initialDhuhr,
-      'initialAsr': initialAsr,
-      'initialMaghrib': initialMaghrib,
-      'initialIsha': initialIsha,
-      'initialWitr': initialWitr,
-      'initialFasting': initialFasting,
-    };
-  }
+    // Gamification & Goals
+    @Default(1) int level,
+    @Default(0) int exp,
+    @Default(0) int virtualCoins,
+    @Default(5) int dailyGoal,
+    @Default(0) int completedToday,
+    String? lastDailyReset, // Store as ISO string
+    // Quran Progress
+    @Default(1) int lastQuranSurah,
+    @Default(1) int lastQuranPage,
+    @Default([]) List<int> unlockedThemes,
+  }) = _KazaModel;
 
+  // ignore: unused_element
+  const KazaModel._();
+
+  factory KazaModel.fromJson(Map<String, dynamic> json) =>
+      _$KazaModelFromJson(json);
+
+  // Hive stores Map<dynamic, dynamic>, so we need a converter or fromMap
   factory KazaModel.fromMap(Map<dynamic, dynamic> map) {
-    return KazaModel(
-      fajr: map['fajr']?.toInt() ?? 0,
-      dhuhr: map['dhuhr']?.toInt() ?? 0,
-      asr: map['asr']?.toInt() ?? 0,
-      maghrib: map['maghrib']?.toInt() ?? 0,
-      isha: map['isha']?.toInt() ?? 0,
-      witr: map['witr']?.toInt() ?? 0,
-      fasting: map['fasting']?.toInt() ?? 0,
-      initialFajr: map['initialFajr']?.toInt() ?? 0,
-      initialDhuhr: map['initialDhuhr']?.toInt() ?? 0,
-      initialAsr: map['initialAsr']?.toInt() ?? 0,
-      initialMaghrib: map['initialMaghrib']?.toInt() ?? 0,
-      initialIsha: map['initialIsha']?.toInt() ?? 0,
-      initialWitr: map['initialWitr']?.toInt() ?? 0,
-      initialFasting: map['initialFasting']?.toInt() ?? 0,
-    );
+    final stringMap = map.map((key, value) => MapEntry(key.toString(), value));
+    return KazaModel.fromJson(stringMap);
   }
+}
+
+extension KazaModelX on KazaModel {
+  Map<String, dynamic> toMap() => toJson();
 
   int get totalRemaining =>
       fajr + dhuhr + asr + maghrib + isha + witr + fasting;
+
   int get totalInitial =>
       initialFajr +
       initialDhuhr +
@@ -122,6 +84,8 @@ class KazaModel {
     if (totalInitial == 0) return 0;
     return 1 - (totalRemaining / totalInitial);
   }
+
+  int get totalCompleted => totalInitial - totalRemaining;
 
   int getCount(PrayerType type) {
     switch (type) {
@@ -140,5 +104,79 @@ class KazaModel {
       case PrayerType.fasting:
         return fasting;
     }
+  }
+
+  /// Calculates XP needed for next level: Lvl * 100
+  int get xpForNextLevel => level * 100;
+
+  /// Check if daily goals should be reset
+  KazaModel resetIfNeeded() {
+    final now = DateTime.now();
+    final todayStr = "${now.year}-${now.month}-${now.day}";
+
+    if (lastDailyReset != todayStr) {
+      return copyWith(completedToday: 0, lastDailyReset: todayStr);
+    }
+    return this;
+  }
+
+  /// Increment stats after completing a prayer
+  KazaModel countPrayer(int amount) {
+    int newExp = exp + (amount * 10); // 10 XP per prayer unit
+    int newLevel = level;
+
+    // Level up logic
+    while (newExp >= (newLevel * 100)) {
+      newExp -= (newLevel * 100);
+      newLevel++;
+    }
+
+    return copyWith(
+      exp: newExp,
+      level: newLevel,
+      completedToday: completedToday + amount,
+    ).checkAchievements();
+  }
+
+  /// Automatically check and unlock achievements
+  KazaModel checkAchievements() {
+    final newAchievements = List<String>.from(achievements);
+    final total = totalCompleted;
+
+    void addIfNew(String id) {
+      if (!newAchievements.contains(id)) {
+        newAchievements.add(id);
+      }
+    }
+
+    if (total >= 100) addIfNew('prayers100');
+    if (total >= 500) addIfNew('prayers500');
+    if (total >= 1000) addIfNew('prayers1000');
+    if (level >= 10) addIfNew('level10');
+    if (level >= 25) addIfNew('level25');
+    if (currentStreak >= 7) addIfNew('streak7');
+    if (currentStreak >= 30) addIfNew('streak30');
+    if (completedToday >= dailyGoal) addIfNew('dailyGoalMet');
+
+    if (newAchievements.length == achievements.length) return this;
+    return copyWith(achievements: newAchievements);
+  }
+
+  /// Gets rank name based on level
+  String get rankName {
+    if (level < 5) return 'Beginner';
+    if (level < 15) return 'Diligent';
+    if (level < 30) return 'Devoted';
+    if (level < 50) return 'Master';
+    return 'Legend';
+  }
+
+  /// Gets rank icon based on level
+  IconData get rankIcon {
+    if (level < 5) return Icons.star_border_rounded;
+    if (level < 15) return Icons.star_half_rounded;
+    if (level < 30) return Icons.star_rounded;
+    if (level < 50) return Icons.workspace_premium_rounded;
+    return Icons.military_tech_rounded;
   }
 }

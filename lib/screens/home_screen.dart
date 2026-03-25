@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../repositories/kaza_repository.dart';
+import '../tabs/prayer_times_tab.dart';
 import '../tabs/prayers_tab.dart';
 import '../tabs/fasting_tab.dart';
+import '../tabs/library_tab.dart';
+import '../tabs/tasbih_tab.dart';
 import '../tabs/settings_tab.dart';
 import '../services/notification_service.dart';
 
@@ -27,8 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _tabs = [
+      const PrayerTimesTab(),
       PrayersTab(repository: widget.repository),
       FastingTab(repository: widget.repository),
+      const TasbihTab(),
+      const LibraryTab(),
       SettingsTab(
         repository: widget.repository,
         notificationService: widget.notificationService,
@@ -63,6 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 70,
           destinations: [
             NavigationDestination(
+              icon: const Icon(Icons.access_time_outlined, size: 24),
+              selectedIcon: Icon(
+                Icons.access_time_filled_rounded,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'nav.times'.tr(),
+            ),
+            NavigationDestination(
               icon: const Icon(Icons.mosque_outlined, size: 24),
               selectedIcon: Icon(
                 Icons.mosque,
@@ -79,6 +94,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: 'nav.fasting'.tr(),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.radio_button_checked_rounded, size: 24),
+              selectedIcon: Icon(
+                Icons.radio_button_checked_rounded,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'tasbih.title'.tr(),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.menu_book_outlined, size: 24),
+              selectedIcon: Icon(
+                Icons.menu_book_rounded,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              label: 'nav.library'.tr(),
             ),
             NavigationDestination(
               icon: const Icon(Icons.settings_outlined, size: 24),

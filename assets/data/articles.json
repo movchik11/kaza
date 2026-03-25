@@ -1,0 +1,16 @@
+[
+    {
+        "id": "importance_of_prayer",
+        "title": "settings.library.importance_title",
+        "content": "settings.library.importance_content",
+        "category": "fiqh",
+        "source": "Al-Baqarah"
+    },
+    {
+        "id": "qaza_rules",
+        "title": "settings.library.qaza_rules_title",
+        "content": "settings.library.qaza_rules_content",
+        "category": "fiqh",
+        "source": "Hadith"
+    }
+]

@@ -37,7 +37,12 @@ class NotificationService {
     await androidImplementation?.requestNotificationsPermission();
   }
 
-  Future<void> scheduleDailyReminder(TimeOfDay time) async {
+  Future<void> scheduleDailyReminder({
+    required TimeOfDay time,
+    int offsetMinutes = 0,
+    int? silentStart,
+    int? silentEnd,
+  }) async {
     await flutterLocalNotificationsPlugin.cancelAll();
 
     final now = DateTime.now();
@@ -47,10 +52,29 @@ class NotificationService {
       now.day,
       time.hour,
       time.minute,
-    );
+    ).subtract(Duration(minutes: offsetMinutes));
 
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    // Check silent hours
+    if (silentStart != null && silentEnd != null) {
+      final hour = scheduledDate.hour;
+      bool isSilent = false;
+      if (silentStart < silentEnd) {
+        isSilent = hour >= silentStart && hour < silentEnd;
+      } else {
+        // e.g. 22:00 to 06:00
+        isSilent = hour >= silentStart || hour < silentEnd;
+      }
+
+      if (isSilent) {
+        debugPrint(
+          'Skipping notification: falling within silent hours ($silentStart-$silentEnd)',
+        );
+        return;
+      }
     }
 
     // Checking error: "The named parameter 'id' is required", "scheduledDate is required"...

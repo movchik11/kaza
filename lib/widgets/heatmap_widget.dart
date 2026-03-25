@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../repositories/kaza_repository.dart';
+import '../utils/intl_utils.dart';
 
 class HeatmapWidget extends StatelessWidget {
   final KazaRepository repository;
@@ -63,7 +64,8 @@ class HeatmapWidget extends StatelessWidget {
               }
 
               return Tooltip(
-                message: "${DateFormat('MMM d').format(date)}: $count",
+                message:
+                    "${DateFormat('MMM d', IntlUtils.getSafeLocale(context)).format(date)}: $count",
                 child: Container(
                   width: 14,
                   height: 14,
