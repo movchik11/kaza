@@ -6,8 +6,8 @@ part of 'kaza_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$KazaModelImpl _$$KazaModelImplFromJson(Map<String, dynamic> json) =>
-    _$KazaModelImpl(
+_$$KazaModelImplImpl _$$$KazaModelImplImplFromJson(Map<String, dynamic> json) =>
+    _$$KazaModelImplImpl(
       fajr: (json['fajr'] as num?)?.toInt() ?? 0,
       dhuhr: (json['dhuhr'] as num?)?.toInt() ?? 0,
       asr: (json['asr'] as num?)?.toInt() ?? 0,
@@ -51,39 +51,40 @@ _$KazaModelImpl _$$KazaModelImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$KazaModelImplToJson(_$KazaModelImpl instance) =>
-    <String, dynamic>{
-      'fajr': instance.fajr,
-      'dhuhr': instance.dhuhr,
-      'asr': instance.asr,
-      'maghrib': instance.maghrib,
-      'isha': instance.isha,
-      'witr': instance.witr,
-      'fasting': instance.fasting,
-      'sunnahFajr': instance.sunnahFajr,
-      'sunnahDhuhr': instance.sunnahDhuhr,
-      'sunnahAsr': instance.sunnahAsr,
-      'sunnahMaghrib': instance.sunnahMaghrib,
-      'sunnahIsha': instance.sunnahIsha,
-      'nafl': instance.nafl,
-      'initialFajr': instance.initialFajr,
-      'initialDhuhr': instance.initialDhuhr,
-      'initialAsr': instance.initialAsr,
-      'initialMaghrib': instance.initialMaghrib,
-      'initialIsha': instance.initialIsha,
-      'initialWitr': instance.initialWitr,
-      'initialFasting': instance.initialFasting,
-      'currentStreak': instance.currentStreak,
-      'bestStreak': instance.bestStreak,
-      'lastActivityDate': instance.lastActivityDate,
-      'achievements': instance.achievements,
-      'level': instance.level,
-      'exp': instance.exp,
-      'virtualCoins': instance.virtualCoins,
-      'dailyGoal': instance.dailyGoal,
-      'completedToday': instance.completedToday,
-      'lastDailyReset': instance.lastDailyReset,
-      'lastQuranSurah': instance.lastQuranSurah,
-      'lastQuranPage': instance.lastQuranPage,
-      'unlockedThemes': instance.unlockedThemes,
-    };
+Map<String, dynamic> _$$$KazaModelImplImplToJson(
+  _$$KazaModelImplImpl instance,
+) => <String, dynamic>{
+  'fajr': instance.fajr,
+  'dhuhr': instance.dhuhr,
+  'asr': instance.asr,
+  'maghrib': instance.maghrib,
+  'isha': instance.isha,
+  'witr': instance.witr,
+  'fasting': instance.fasting,
+  'sunnahFajr': instance.sunnahFajr,
+  'sunnahDhuhr': instance.sunnahDhuhr,
+  'sunnahAsr': instance.sunnahAsr,
+  'sunnahMaghrib': instance.sunnahMaghrib,
+  'sunnahIsha': instance.sunnahIsha,
+  'nafl': instance.nafl,
+  'initialFajr': instance.initialFajr,
+  'initialDhuhr': instance.initialDhuhr,
+  'initialAsr': instance.initialAsr,
+  'initialMaghrib': instance.initialMaghrib,
+  'initialIsha': instance.initialIsha,
+  'initialWitr': instance.initialWitr,
+  'initialFasting': instance.initialFasting,
+  'currentStreak': instance.currentStreak,
+  'bestStreak': instance.bestStreak,
+  'lastActivityDate': instance.lastActivityDate,
+  'achievements': instance.achievements,
+  'level': instance.level,
+  'exp': instance.exp,
+  'virtualCoins': instance.virtualCoins,
+  'dailyGoal': instance.dailyGoal,
+  'completedToday': instance.completedToday,
+  'lastDailyReset': instance.lastDailyReset,
+  'lastQuranSurah': instance.lastQuranSurah,
+  'lastQuranPage': instance.lastQuranPage,
+  'unlockedThemes': instance.unlockedThemes,
+};

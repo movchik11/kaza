@@ -76,24 +76,36 @@ class _PrayersTabState extends State<PrayersTab> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Stack(
                             children: [
-                              Text(
-                                'prayers.title'.tr(),
-                                style: const TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'prayers.subtitle'.tr(),
-                                style: TextStyle(
-                                  color: colorScheme.onSurface.withValues(
-                                    alpha: 0.6,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'prayers.title'.tr(),
+                                    style: const TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  fontSize: 16,
+                                  Text(
+                                    'prayers.subtitle'.tr(),
+                                    style: TextStyle(
+                                      color: colorScheme.onSurface.withValues(
+                                        alpha: 0.6,
+                                      ),
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                top: 40,
+                                right: 0,
+                                child: IconButton(
+                                  icon: const Icon(Icons.help_outline),
+                                  onPressed: () => _showHelpDialog(context),
                                 ),
                               ),
                             ],
@@ -1116,6 +1128,40 @@ class _PrayersTabState extends State<PrayersTab> {
           ],
         );
       },
+    );
+  }
+
+  void _showHelpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('settings.help'.tr()),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'settings.helpKaza'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text('library.qaza_rules_content'.tr()),
+            const SizedBox(height: 16),
+            Text(
+              'settings.helpSunnah'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text('confirmation.pointsInfo'.tr()),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('common.ok'.tr()),
+          ),
+        ],
+      ),
     );
   }
 }

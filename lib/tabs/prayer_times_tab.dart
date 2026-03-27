@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:adhan/adhan.dart';
+import 'package:hijri/hijri_calendar.dart';
 import '../services/prayer_times_service.dart';
 import '../utils/hijri_utils.dart';
 
@@ -38,70 +39,75 @@ class PrayerTimesTab extends StatelessWidget {
                   final nextHoliday = HijriUtils.getNextHoliday(DateTime.now());
                   if (nextHoliday == null) return const SizedBox.shrink();
 
-                  return Container(
-                    padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.only(bottom: 24),
-                    decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
+                  return GestureDetector(
+                    onTap: () => _showAllHolidays(context),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(bottom: 24),
+                      decoration: BoxDecoration(
                         color: Theme.of(
                           context,
-                        ).colorScheme.primary.withValues(alpha: 0.2),
+                        ).colorScheme.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.2),
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.event,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'calendar.upcoming'.tr().toUpperCase(),
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.2,
-                                ),
-                              ),
-                              Text(
-                                nextHoliday.nameKey.tr(),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.event,
                             color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(
-                            nextHoliday.daysUntil == 0
-                                ? 'calendar.today'.tr()
-                                : '${nextHoliday.daysUntil} ${"calendar.days".tr()}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'calendar.upcoming'.tr().toUpperCase(),
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                                Text(
+                                  nextHoliday.nameKey.tr(),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              nextHoliday.daysUntil == 0
+                                  ? 'calendar.today'.tr()
+                                  : '${nextHoliday.daysUntil} ${"calendar.days".tr()}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -113,17 +119,35 @@ class PrayerTimesTab extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
                   if (!snapshot.hasData || snapshot.data == null) {
-                    return Center(child: Text("prayers.locationRequired".tr()));
+                    return Center(
+                      child: Text("prayerTimes.locationRequired".tr()),
+                    );
                   }
 
                   final pt = snapshot.data!;
                   return Column(
                     children: [
-                      _buildPrayerTimeRow(context, "Fajr", pt.fajr),
-                      _buildPrayerTimeRow(context, "Dhuhr", pt.dhuhr),
-                      _buildPrayerTimeRow(context, "Asr", pt.asr),
-                      _buildPrayerTimeRow(context, "Maghrib", pt.maghrib),
-                      _buildPrayerTimeRow(context, "Isha", pt.isha),
+                      _buildPrayerTimeRow(
+                        context,
+                        "prayers.fajr".tr(),
+                        pt.fajr,
+                      ),
+                      _buildPrayerTimeRow(
+                        context,
+                        "prayers.dhuhr".tr(),
+                        pt.dhuhr,
+                      ),
+                      _buildPrayerTimeRow(context, "prayers.asr".tr(), pt.asr),
+                      _buildPrayerTimeRow(
+                        context,
+                        "prayers.maghrib".tr(),
+                        pt.maghrib,
+                      ),
+                      _buildPrayerTimeRow(
+                        context,
+                        "prayers.isha".tr(),
+                        pt.isha,
+                      ),
                     ],
                   );
                 },
@@ -131,6 +155,71 @@ class PrayerTimesTab extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showAllHolidays(BuildContext context) {
+    final hDate = HijriCalendar.now();
+    final holidays = HijriUtils.getAllHolidays(hDate.hYear);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
+          'calendar.holidays_title'.tr(), // Need to add this key
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: holidays.length,
+            itemBuilder: (context, index) {
+              final holiday = holidays[index];
+              return ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  holiday.nameKey.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text(
+                  DateFormat(
+                    'd MMMM yyyy',
+                    context.locale.languageCode,
+                  ).format(holiday.date!),
+                ),
+                trailing: holiday.daysUntil == 0
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          'calendar.today'.tr(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : null,
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('common.ok'.tr()),
+          ),
+        ],
       ),
     );
   }

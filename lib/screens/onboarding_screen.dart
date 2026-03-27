@@ -65,8 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ageStartedPraying: startedAge,
     );
 
-    if (!context.mounted) return;
-
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => HomeScreen(

@@ -12,7 +12,6 @@ import 'cubit/settings_cubit.dart';
 import 'cubit/settings_state.dart';
 import 'cubit/tasbih_cubit.dart';
 import 'screens/home_screen.dart';
-import 'screens/onboarding_screen.dart';
 import 'screens/language_selection_screen.dart';
 import 'widgets/lock_wrapper.dart';
 import 'services/theme_service.dart';

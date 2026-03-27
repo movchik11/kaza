@@ -15,5 +15,5 @@ class KazaState with _$KazaState {
     @Default(0) double dailyAverageRate,
     DateTime? expectedCompletionDate,
     String? errorMessage,
-  }) = _KazaState;
+  }) = _$KazaStateImpl;
 }

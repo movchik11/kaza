@@ -1,16 +1,23 @@
 [
     {
         "id": "importance_of_prayer",
-        "title": "settings.library.importance_title",
-        "content": "settings.library.importance_content",
-        "category": "fiqh",
-        "source": "Al-Baqarah"
+        "title": "library.importance_title",
+        "content": "library.importance_content",
+        "category": "library.fiqh",
+        "source": "Quran"
     },
     {
         "id": "qaza_rules",
-        "title": "settings.library.qaza_rules_title",
-        "content": "settings.library.qaza_rules_content",
-        "category": "fiqh",
+        "title": "library.qaza_rules_title",
+        "content": "library.qaza_rules_content",
+        "category": "library.fiqh",
         "source": "Hadith"
+    },
+    {
+        "id": "benefits_of_prayer",
+        "title": "library.benefits_title",
+        "content": "library.benefits_content",
+        "category": "library.fiqh",
+        "source": "Quran"
     }
 ]

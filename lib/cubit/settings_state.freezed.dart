@@ -23,9 +23,6 @@ mixin _$SettingsState {
   int get reminderMinute => throw _privateConstructorUsedError;
   int get seedColor =>
       throw _privateConstructorUsedError; // Default Islamic Green
-  bool get soundEnabled => throw _privateConstructorUsedError;
-  bool get vibrationEnabled => throw _privateConstructorUsedError;
-  bool get biometricLockEnabled => throw _privateConstructorUsedError;
   int get silentHoursStart => throw _privateConstructorUsedError; // 10 PM
   int get silentHoursEnd => throw _privateConstructorUsedError; // 6 AM
   int get reminderOffset =>
@@ -33,6 +30,8 @@ mixin _$SettingsState {
   bool get useDynamicTheme => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   int? get ageStartedPraying => throw _privateConstructorUsedError;
+  int? get lastQuranSurah => throw _privateConstructorUsedError;
+  int? get lastQuranPage => throw _privateConstructorUsedError;
   String? get locationName => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
@@ -55,15 +54,14 @@ abstract class $SettingsStateCopyWith<$Res> {
     int reminderHour,
     int reminderMinute,
     int seedColor,
-    bool soundEnabled,
-    bool vibrationEnabled,
-    bool biometricLockEnabled,
     int silentHoursStart,
     int silentHoursEnd,
     int reminderOffset,
     bool useDynamicTheme,
     String? gender,
     int? ageStartedPraying,
+    int? lastQuranSurah,
+    int? lastQuranPage,
     String? locationName,
   });
 }
@@ -88,15 +86,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? reminderHour = null,
     Object? reminderMinute = null,
     Object? seedColor = null,
-    Object? soundEnabled = null,
-    Object? vibrationEnabled = null,
-    Object? biometricLockEnabled = null,
     Object? silentHoursStart = null,
     Object? silentHoursEnd = null,
     Object? reminderOffset = null,
     Object? useDynamicTheme = null,
     Object? gender = freezed,
     Object? ageStartedPraying = freezed,
+    Object? lastQuranSurah = freezed,
+    Object? lastQuranPage = freezed,
     Object? locationName = freezed,
   }) {
     return _then(
@@ -121,18 +118,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
                 ? _value.seedColor
                 : seedColor // ignore: cast_nullable_to_non_nullable
                       as int,
-            soundEnabled: null == soundEnabled
-                ? _value.soundEnabled
-                : soundEnabled // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            vibrationEnabled: null == vibrationEnabled
-                ? _value.vibrationEnabled
-                : vibrationEnabled // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            biometricLockEnabled: null == biometricLockEnabled
-                ? _value.biometricLockEnabled
-                : biometricLockEnabled // ignore: cast_nullable_to_non_nullable
-                      as bool,
             silentHoursStart: null == silentHoursStart
                 ? _value.silentHoursStart
                 : silentHoursStart // ignore: cast_nullable_to_non_nullable
@@ -157,6 +142,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
                 ? _value.ageStartedPraying
                 : ageStartedPraying // ignore: cast_nullable_to_non_nullable
                       as int?,
+            lastQuranSurah: freezed == lastQuranSurah
+                ? _value.lastQuranSurah
+                : lastQuranSurah // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            lastQuranPage: freezed == lastQuranPage
+                ? _value.lastQuranPage
+                : lastQuranPage // ignore: cast_nullable_to_non_nullable
+                      as int?,
             locationName: freezed == locationName
                 ? _value.locationName
                 : locationName // ignore: cast_nullable_to_non_nullable
@@ -168,12 +161,12 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
 }
 
 /// @nodoc
-abstract class _$$SettingsStateImplCopyWith<$Res>
+abstract class _$$$SettingsStateImplImplCopyWith<$Res>
     implements $SettingsStateCopyWith<$Res> {
-  factory _$$SettingsStateImplCopyWith(
-    _$SettingsStateImpl value,
-    $Res Function(_$SettingsStateImpl) then,
-  ) = __$$SettingsStateImplCopyWithImpl<$Res>;
+  factory _$$$SettingsStateImplImplCopyWith(
+    _$$SettingsStateImplImpl value,
+    $Res Function(_$$SettingsStateImplImpl) then,
+  ) = __$$$SettingsStateImplImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -182,26 +175,25 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
     int reminderHour,
     int reminderMinute,
     int seedColor,
-    bool soundEnabled,
-    bool vibrationEnabled,
-    bool biometricLockEnabled,
     int silentHoursStart,
     int silentHoursEnd,
     int reminderOffset,
     bool useDynamicTheme,
     String? gender,
     int? ageStartedPraying,
+    int? lastQuranSurah,
+    int? lastQuranPage,
     String? locationName,
   });
 }
 
 /// @nodoc
-class __$$SettingsStateImplCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res, _$SettingsStateImpl>
-    implements _$$SettingsStateImplCopyWith<$Res> {
-  __$$SettingsStateImplCopyWithImpl(
-    _$SettingsStateImpl _value,
-    $Res Function(_$SettingsStateImpl) _then,
+class __$$$SettingsStateImplImplCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res, _$$SettingsStateImplImpl>
+    implements _$$$SettingsStateImplImplCopyWith<$Res> {
+  __$$$SettingsStateImplImplCopyWithImpl(
+    _$$SettingsStateImplImpl _value,
+    $Res Function(_$$SettingsStateImplImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of SettingsState
@@ -214,19 +206,18 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? reminderHour = null,
     Object? reminderMinute = null,
     Object? seedColor = null,
-    Object? soundEnabled = null,
-    Object? vibrationEnabled = null,
-    Object? biometricLockEnabled = null,
     Object? silentHoursStart = null,
     Object? silentHoursEnd = null,
     Object? reminderOffset = null,
     Object? useDynamicTheme = null,
     Object? gender = freezed,
     Object? ageStartedPraying = freezed,
+    Object? lastQuranSurah = freezed,
+    Object? lastQuranPage = freezed,
     Object? locationName = freezed,
   }) {
     return _then(
-      _$SettingsStateImpl(
+      _$$SettingsStateImplImpl(
         themeMode: null == themeMode
             ? _value.themeMode
             : themeMode // ignore: cast_nullable_to_non_nullable
@@ -247,18 +238,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
             ? _value.seedColor
             : seedColor // ignore: cast_nullable_to_non_nullable
                   as int,
-        soundEnabled: null == soundEnabled
-            ? _value.soundEnabled
-            : soundEnabled // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        vibrationEnabled: null == vibrationEnabled
-            ? _value.vibrationEnabled
-            : vibrationEnabled // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        biometricLockEnabled: null == biometricLockEnabled
-            ? _value.biometricLockEnabled
-            : biometricLockEnabled // ignore: cast_nullable_to_non_nullable
-                  as bool,
         silentHoursStart: null == silentHoursStart
             ? _value.silentHoursStart
             : silentHoursStart // ignore: cast_nullable_to_non_nullable
@@ -283,6 +262,14 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
             ? _value.ageStartedPraying
             : ageStartedPraying // ignore: cast_nullable_to_non_nullable
                   as int?,
+        lastQuranSurah: freezed == lastQuranSurah
+            ? _value.lastQuranSurah
+            : lastQuranSurah // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        lastQuranPage: freezed == lastQuranPage
+            ? _value.lastQuranPage
+            : lastQuranPage // ignore: cast_nullable_to_non_nullable
+                  as int?,
         locationName: freezed == locationName
             ? _value.locationName
             : locationName // ignore: cast_nullable_to_non_nullable
@@ -294,22 +281,21 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateImpl implements _SettingsState {
-  const _$SettingsStateImpl({
+class _$$SettingsStateImplImpl implements _$SettingsStateImpl {
+  const _$$SettingsStateImplImpl({
     this.themeMode = ThemeMode.dark,
     this.notificationsEnabled = false,
     this.reminderHour = 20,
     this.reminderMinute = 0,
     this.seedColor = 0xFF10B981,
-    this.soundEnabled = true,
-    this.vibrationEnabled = true,
-    this.biometricLockEnabled = false,
     this.silentHoursStart = 22,
     this.silentHoursEnd = 6,
     this.reminderOffset = 15,
     this.useDynamicTheme = false,
     this.gender,
     this.ageStartedPraying,
+    this.lastQuranSurah,
+    this.lastQuranPage,
     this.locationName,
   });
 
@@ -331,15 +317,6 @@ class _$SettingsStateImpl implements _SettingsState {
   // Default Islamic Green
   @override
   @JsonKey()
-  final bool soundEnabled;
-  @override
-  @JsonKey()
-  final bool vibrationEnabled;
-  @override
-  @JsonKey()
-  final bool biometricLockEnabled;
-  @override
-  @JsonKey()
   final int silentHoursStart;
   // 10 PM
   @override
@@ -358,18 +335,22 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   final int? ageStartedPraying;
   @override
+  final int? lastQuranSurah;
+  @override
+  final int? lastQuranPage;
+  @override
   final String? locationName;
 
   @override
   String toString() {
-    return 'SettingsState(themeMode: $themeMode, notificationsEnabled: $notificationsEnabled, reminderHour: $reminderHour, reminderMinute: $reminderMinute, seedColor: $seedColor, soundEnabled: $soundEnabled, vibrationEnabled: $vibrationEnabled, biometricLockEnabled: $biometricLockEnabled, silentHoursStart: $silentHoursStart, silentHoursEnd: $silentHoursEnd, reminderOffset: $reminderOffset, useDynamicTheme: $useDynamicTheme, gender: $gender, ageStartedPraying: $ageStartedPraying, locationName: $locationName)';
+    return 'SettingsState(themeMode: $themeMode, notificationsEnabled: $notificationsEnabled, reminderHour: $reminderHour, reminderMinute: $reminderMinute, seedColor: $seedColor, silentHoursStart: $silentHoursStart, silentHoursEnd: $silentHoursEnd, reminderOffset: $reminderOffset, useDynamicTheme: $useDynamicTheme, gender: $gender, ageStartedPraying: $ageStartedPraying, lastQuranSurah: $lastQuranSurah, lastQuranPage: $lastQuranPage, locationName: $locationName)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SettingsStateImpl &&
+            other is _$$SettingsStateImplImpl &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
             (identical(other.notificationsEnabled, notificationsEnabled) ||
@@ -380,12 +361,6 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.reminderMinute == reminderMinute) &&
             (identical(other.seedColor, seedColor) ||
                 other.seedColor == seedColor) &&
-            (identical(other.soundEnabled, soundEnabled) ||
-                other.soundEnabled == soundEnabled) &&
-            (identical(other.vibrationEnabled, vibrationEnabled) ||
-                other.vibrationEnabled == vibrationEnabled) &&
-            (identical(other.biometricLockEnabled, biometricLockEnabled) ||
-                other.biometricLockEnabled == biometricLockEnabled) &&
             (identical(other.silentHoursStart, silentHoursStart) ||
                 other.silentHoursStart == silentHoursStart) &&
             (identical(other.silentHoursEnd, silentHoursEnd) ||
@@ -397,6 +372,10 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.ageStartedPraying, ageStartedPraying) ||
                 other.ageStartedPraying == ageStartedPraying) &&
+            (identical(other.lastQuranSurah, lastQuranSurah) ||
+                other.lastQuranSurah == lastQuranSurah) &&
+            (identical(other.lastQuranPage, lastQuranPage) ||
+                other.lastQuranPage == lastQuranPage) &&
             (identical(other.locationName, locationName) ||
                 other.locationName == locationName));
   }
@@ -409,15 +388,14 @@ class _$SettingsStateImpl implements _SettingsState {
     reminderHour,
     reminderMinute,
     seedColor,
-    soundEnabled,
-    vibrationEnabled,
-    biometricLockEnabled,
     silentHoursStart,
     silentHoursEnd,
     reminderOffset,
     useDynamicTheme,
     gender,
     ageStartedPraying,
+    lastQuranSurah,
+    lastQuranPage,
     locationName,
   );
 
@@ -426,28 +404,30 @@ class _$SettingsStateImpl implements _SettingsState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
-      __$$SettingsStateImplCopyWithImpl<_$SettingsStateImpl>(this, _$identity);
+  _$$$SettingsStateImplImplCopyWith<_$$SettingsStateImplImpl> get copyWith =>
+      __$$$SettingsStateImplImplCopyWithImpl<_$$SettingsStateImplImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _SettingsState implements SettingsState {
-  const factory _SettingsState({
+abstract class _$SettingsStateImpl implements SettingsState {
+  const factory _$SettingsStateImpl({
     final ThemeMode themeMode,
     final bool notificationsEnabled,
     final int reminderHour,
     final int reminderMinute,
     final int seedColor,
-    final bool soundEnabled,
-    final bool vibrationEnabled,
-    final bool biometricLockEnabled,
     final int silentHoursStart,
     final int silentHoursEnd,
     final int reminderOffset,
     final bool useDynamicTheme,
     final String? gender,
     final int? ageStartedPraying,
+    final int? lastQuranSurah,
+    final int? lastQuranPage,
     final String? locationName,
-  }) = _$SettingsStateImpl;
+  }) = _$$SettingsStateImplImpl;
 
   @override
   ThemeMode get themeMode;
@@ -459,12 +439,6 @@ abstract class _SettingsState implements SettingsState {
   int get reminderMinute;
   @override
   int get seedColor; // Default Islamic Green
-  @override
-  bool get soundEnabled;
-  @override
-  bool get vibrationEnabled;
-  @override
-  bool get biometricLockEnabled;
   @override
   int get silentHoursStart; // 10 PM
   @override
@@ -478,12 +452,16 @@ abstract class _SettingsState implements SettingsState {
   @override
   int? get ageStartedPraying;
   @override
+  int? get lastQuranSurah;
+  @override
+  int? get lastQuranPage;
+  @override
   String? get locationName;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
+  _$$$SettingsStateImplImplCopyWith<_$$SettingsStateImplImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

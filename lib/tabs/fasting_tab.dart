@@ -459,8 +459,8 @@ class _FastingTabState extends State<FastingTab> {
                 ],
               ),
               const SizedBox(height: 24),
-              const Text(
-                '— OR —',
+              Text(
+                '— ${"common.or".tr()} —',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12,

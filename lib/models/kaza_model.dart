@@ -50,7 +50,7 @@ class KazaModel with _$KazaModel {
     @Default(1) int lastQuranSurah,
     @Default(1) int lastQuranPage,
     @Default([]) List<int> unlockedThemes,
-  }) = _KazaModel;
+  }) = _$KazaModelImpl;
 
   // ignore: unused_element
   const KazaModel._();

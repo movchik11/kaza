@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/services.dart';
 import '../models/kaza_model.dart';
 import '../repositories/kaza_repository.dart';
 import 'kaza_state.dart';
@@ -37,7 +36,6 @@ class KazaCubit extends Cubit<KazaState> {
 
   /// Decrement a prayer by the given amount
   Future<void> decrementPrayer(PrayerType type, [int amount = 1]) async {
-    HapticFeedback.lightImpact();
     await _repository.decrementPrayer(type, amount);
     final data = _repository.getKazaData();
     final history = _repository.getHistory();
@@ -55,7 +53,6 @@ class KazaCubit extends Cubit<KazaState> {
 
   /// Bulk decrement: close a full day (all 6 prayers)
   Future<void> decrementDay() async {
-    HapticFeedback.mediumImpact();
     await _repository.decrementDay();
     final data = _repository.getKazaData();
     final history = _repository.getHistory();
@@ -64,7 +61,6 @@ class KazaCubit extends Cubit<KazaState> {
 
   /// Increment a Sunnah prayer
   Future<void> incrementSunnah(PrayerType type, [int amount = 1]) async {
-    HapticFeedback.lightImpact();
     await _repository.incrementSunnah(type, amount);
     final data = _repository.getKazaData();
     emit(state.copyWith(data: data));
@@ -72,7 +68,6 @@ class KazaCubit extends Cubit<KazaState> {
 
   /// Increment a Nafl prayer
   Future<void> incrementNafl([int amount = 1]) async {
-    HapticFeedback.lightImpact();
     await _repository.incrementNafl(amount);
     final data = _repository.getKazaData();
     emit(state.copyWith(data: data));
@@ -105,7 +100,6 @@ class KazaCubit extends Cubit<KazaState> {
 
   /// Bulk add: add multiple counts at once (e.g., +10 or +30)
   Future<void> bulkAdd(PrayerType type, int amount) async {
-    HapticFeedback.mediumImpact();
     final current = state.data;
     int newValue = current.getCount(type) + amount;
 

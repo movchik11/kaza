@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 KazaModel _$KazaModelFromJson(Map<String, dynamic> json) {
-  return _KazaModel.fromJson(json);
+  return _$KazaModelImpl.fromJson(json);
 }
 
 /// @nodoc
@@ -303,12 +303,12 @@ class _$KazaModelCopyWithImpl<$Res, $Val extends KazaModel>
 }
 
 /// @nodoc
-abstract class _$$KazaModelImplCopyWith<$Res>
+abstract class _$$$KazaModelImplImplCopyWith<$Res>
     implements $KazaModelCopyWith<$Res> {
-  factory _$$KazaModelImplCopyWith(
-    _$KazaModelImpl value,
-    $Res Function(_$KazaModelImpl) then,
-  ) = __$$KazaModelImplCopyWithImpl<$Res>;
+  factory _$$$KazaModelImplImplCopyWith(
+    _$$KazaModelImplImpl value,
+    $Res Function(_$$KazaModelImplImpl) then,
+  ) = __$$$KazaModelImplImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -349,12 +349,12 @@ abstract class _$$KazaModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$KazaModelImplCopyWithImpl<$Res>
-    extends _$KazaModelCopyWithImpl<$Res, _$KazaModelImpl>
-    implements _$$KazaModelImplCopyWith<$Res> {
-  __$$KazaModelImplCopyWithImpl(
-    _$KazaModelImpl _value,
-    $Res Function(_$KazaModelImpl) _then,
+class __$$$KazaModelImplImplCopyWithImpl<$Res>
+    extends _$KazaModelCopyWithImpl<$Res, _$$KazaModelImplImpl>
+    implements _$$$KazaModelImplImplCopyWith<$Res> {
+  __$$$KazaModelImplImplCopyWithImpl(
+    _$$KazaModelImplImpl _value,
+    $Res Function(_$$KazaModelImplImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of KazaModel
@@ -397,7 +397,7 @@ class __$$KazaModelImplCopyWithImpl<$Res>
     Object? unlockedThemes = null,
   }) {
     return _then(
-      _$KazaModelImpl(
+      _$$KazaModelImplImpl(
         fajr: null == fajr
             ? _value.fajr
             : fajr // ignore: cast_nullable_to_non_nullable
@@ -537,8 +537,8 @@ class __$$KazaModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$KazaModelImpl extends _KazaModel {
-  const _$KazaModelImpl({
+class _$$KazaModelImplImpl extends _$KazaModelImpl {
+  const _$$KazaModelImplImpl({
     this.fajr = 0,
     this.dhuhr = 0,
     this.asr = 0,
@@ -576,8 +576,8 @@ class _$KazaModelImpl extends _KazaModel {
        _unlockedThemes = unlockedThemes,
        super._();
 
-  factory _$KazaModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$KazaModelImplFromJson(json);
+  factory _$$KazaModelImplImpl.fromJson(Map<String, dynamic> json) =>
+      _$$$KazaModelImplImplFromJson(json);
 
   @override
   @JsonKey()
@@ -704,7 +704,7 @@ class _$KazaModelImpl extends _KazaModel {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$KazaModelImpl &&
+            other is _$$KazaModelImplImpl &&
             (identical(other.fajr, fajr) || other.fajr == fajr) &&
             (identical(other.dhuhr, dhuhr) || other.dhuhr == dhuhr) &&
             (identical(other.asr, asr) || other.asr == asr) &&
@@ -811,17 +811,20 @@ class _$KazaModelImpl extends _KazaModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$KazaModelImplCopyWith<_$KazaModelImpl> get copyWith =>
-      __$$KazaModelImplCopyWithImpl<_$KazaModelImpl>(this, _$identity);
+  _$$$KazaModelImplImplCopyWith<_$$KazaModelImplImpl> get copyWith =>
+      __$$$KazaModelImplImplCopyWithImpl<_$$KazaModelImplImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$KazaModelImplToJson(this);
+    return _$$$KazaModelImplImplToJson(this);
   }
 }
 
-abstract class _KazaModel extends KazaModel {
-  const factory _KazaModel({
+abstract class _$KazaModelImpl extends KazaModel {
+  const factory _$KazaModelImpl({
     final int fajr,
     final int dhuhr,
     final int asr,
@@ -855,11 +858,11 @@ abstract class _KazaModel extends KazaModel {
     final int lastQuranSurah,
     final int lastQuranPage,
     final List<int> unlockedThemes,
-  }) = _$KazaModelImpl;
-  const _KazaModel._() : super._();
+  }) = _$$KazaModelImplImpl;
+  const _$KazaModelImpl._() : super._();
 
-  factory _KazaModel.fromJson(Map<String, dynamic> json) =
-      _$KazaModelImpl.fromJson;
+  factory _$KazaModelImpl.fromJson(Map<String, dynamic> json) =
+      _$$KazaModelImplImpl.fromJson;
 
   @override
   int get fajr;
@@ -933,6 +936,6 @@ abstract class _KazaModel extends KazaModel {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$KazaModelImplCopyWith<_$KazaModelImpl> get copyWith =>
+  _$$$KazaModelImplImplCopyWith<_$$KazaModelImplImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

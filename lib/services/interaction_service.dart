@@ -1,20 +1,17 @@
-import 'package:flutter/services.dart';
-
 class InteractionService {
   static Future<void> tap() async {
-    HapticFeedback.selectionClick();
+    // Disabled as per user request
   }
 
   static Future<void> success() async {
-    HapticFeedback.mediumImpact();
+    // Disabled as per user request
   }
 
   static Future<void> levelUp() async {
-    HapticFeedback.heavyImpact();
+    // Disabled as per user request
   }
 
   static Future<void> error() async {
-    HapticFeedback.heavyImpact();
-    // No sound for error usually, or a subtle one
+    // Disabled as per user request
   }
 }

@@ -345,20 +345,9 @@ class KazaRepository {
     await box.put('reminder_minute', minute);
   }
 
-  Future<void> saveInteractionSettings(bool sound, bool vibration) async {
-    final box = Hive.box(_settingsBoxName);
-    await box.put('sound_enabled', sound);
-    await box.put('vibration_enabled', vibration);
-  }
-
   Future<void> saveThemeColor(int color) async {
     final box = Hive.box(_settingsBoxName);
     await box.put('theme_color', color);
-  }
-
-  Future<void> saveBiometricLock(bool enabled) async {
-    final box = Hive.box(_settingsBoxName);
-    await box.put('biometric_lock', enabled);
   }
 
   Future<void> saveReminderOffset(int minutes) async {
@@ -397,9 +386,6 @@ class KazaRepository {
       'hour': box.get('reminder_hour', defaultValue: 20),
       'minute': box.get('reminder_minute', defaultValue: 0),
       'theme_color': box.get('theme_color', defaultValue: 0xFF10B981),
-      'sound_enabled': box.get('sound_enabled', defaultValue: true),
-      'vibration_enabled': box.get('vibration_enabled', defaultValue: true),
-      'biometric_lock': box.get('biometric_lock', defaultValue: false),
       'silent_start': box.get('silent_start', defaultValue: 22),
       'silent_end': box.get('silent_end', defaultValue: 6),
       'reminder_offset': box.get('reminder_offset', defaultValue: 15),

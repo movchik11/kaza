@@ -100,18 +100,18 @@ class _LibraryTabState extends State<LibraryTab>
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: duas.itemCount,
+      itemCount: duas.length,
       itemBuilder: (context, index) {
         final dua = duas[index];
         return Card(
           margin: const EdgeInsets.only(bottom: 12),
           child: ListTile(
             title: Text(
-              dua.title,
+              dua.title.tr(),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              dua.phonetic,
+              dua.phonetic.tr(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -162,7 +162,7 @@ class _LibraryTabState extends State<LibraryTab>
               const SizedBox(height: 8),
               if (article.source != null)
                 Text(
-                  'Source: ${article.source}',
+                  '${"library.source".tr()}: ${article.source}',
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     color: Colors.grey,
@@ -207,7 +207,7 @@ class _LibraryTabState extends State<LibraryTab>
               ),
             ),
             Text(
-              dua.title,
+              dua.title.tr(),
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
@@ -221,7 +221,7 @@ class _LibraryTabState extends State<LibraryTab>
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                dua.arabic,
+                dua.arabic.tr(),
                 textAlign: TextAlign.right,
                 style: const TextStyle(
                   fontSize: 24,
@@ -232,14 +232,14 @@ class _LibraryTabState extends State<LibraryTab>
             ),
             const SizedBox(height: 16),
             Text(
-              dua.phonetic,
+              dua.phonetic.tr(),
               style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  dua.translation,
+                  dua.translation.tr(),
                   style: const TextStyle(fontSize: 16, height: 1.5),
                 ),
               ),

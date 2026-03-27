@@ -20,9 +20,6 @@ class SettingsCubit extends Cubit<SettingsState> {
         reminderHour: settings['hour'] as int? ?? 20,
         reminderMinute: settings['minute'] as int? ?? 0,
         seedColor: settings['theme_color'] as int? ?? 0xFF10B981,
-        soundEnabled: settings['sound_enabled'] as bool? ?? true,
-        vibrationEnabled: settings['vibration_enabled'] as bool? ?? true,
-        biometricLockEnabled: settings['biometric_lock'] as bool? ?? false,
         silentHoursStart: settings['silent_start'] as int? ?? 22,
         silentHoursEnd: settings['silent_end'] as int? ?? 6,
         reminderOffset: settings['reminder_offset'] as int? ?? 15,
@@ -83,21 +80,6 @@ class SettingsCubit extends Cubit<SettingsState> {
         silentEnd: state.silentHoursEnd,
       );
     }
-  }
-
-  void toggleSound(bool enabled) {
-    emit(state.copyWith(soundEnabled: enabled));
-    _repository.saveInteractionSettings(enabled, state.vibrationEnabled);
-  }
-
-  void toggleVibration(bool enabled) {
-    emit(state.copyWith(vibrationEnabled: enabled));
-    _repository.saveInteractionSettings(state.soundEnabled, enabled);
-  }
-
-  void toggleBiometricLock(bool enabled) {
-    emit(state.copyWith(biometricLockEnabled: enabled));
-    _repository.saveBiometricLock(enabled);
   }
 
   void setReminderOffset(int minutes) {

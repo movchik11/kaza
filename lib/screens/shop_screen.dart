@@ -45,6 +45,24 @@ class ShopScreen extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline_rounded),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('shop.title'.tr()),
+                  content: Text('confirmation.pointsInfo'.tr()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('common.ok'.tr()),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           Container(
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -168,7 +186,7 @@ class ShopScreen extends StatelessWidget {
                       Text(
                         'shop.tapToUnlock'.tr(),
                         style: TextStyle(
-                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                           fontSize: 14,
                         ),
                       ),

@@ -1,10 +1,18 @@
 [
     {
-        "id": "after_prayer_1",
-        "title": "Ayatul Kursi",
-        "arabic": "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ...",
-        "phonetic": "Allahu la ilaha illa Huwal Hayyul Qayyum...",
-        "translation": "Allah! There is no god but He, the Living, the Self-subsisting...",
+        "id": "dua_kursi",
+        "title": "library.dua_kursi_title",
+        "arabic": "library.dua_kursi_arabic",
+        "phonetic": "library.dua_kursi_phonetic",
+        "translation": "library.dua_kursi_translation",
+        "category": "after_prayer"
+    },
+    {
+        "id": "after_salah",
+        "title": "library.after_salah_title",
+        "arabic": "library.after_salah_arabic",
+        "phonetic": "library.after_salah_phonetic",
+        "translation": "library.after_salah_translation",
         "category": "after_prayer"
     }
 ]

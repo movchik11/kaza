@@ -120,12 +120,12 @@ class _$KazaStateCopyWithImpl<$Res, $Val extends KazaState>
 }
 
 /// @nodoc
-abstract class _$$KazaStateImplCopyWith<$Res>
+abstract class _$$$KazaStateImplImplCopyWith<$Res>
     implements $KazaStateCopyWith<$Res> {
-  factory _$$KazaStateImplCopyWith(
-    _$KazaStateImpl value,
-    $Res Function(_$KazaStateImpl) then,
-  ) = __$$KazaStateImplCopyWithImpl<$Res>;
+  factory _$$$KazaStateImplImplCopyWith(
+    _$$KazaStateImplImpl value,
+    $Res Function(_$$KazaStateImplImpl) then,
+  ) = __$$$KazaStateImplImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -143,12 +143,12 @@ abstract class _$$KazaStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$KazaStateImplCopyWithImpl<$Res>
-    extends _$KazaStateCopyWithImpl<$Res, _$KazaStateImpl>
-    implements _$$KazaStateImplCopyWith<$Res> {
-  __$$KazaStateImplCopyWithImpl(
-    _$KazaStateImpl _value,
-    $Res Function(_$KazaStateImpl) _then,
+class __$$$KazaStateImplImplCopyWithImpl<$Res>
+    extends _$KazaStateCopyWithImpl<$Res, _$$KazaStateImplImpl>
+    implements _$$$KazaStateImplImplCopyWith<$Res> {
+  __$$$KazaStateImplImplCopyWithImpl(
+    _$$KazaStateImplImpl _value,
+    $Res Function(_$$KazaStateImplImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of KazaState
@@ -165,7 +165,7 @@ class __$$KazaStateImplCopyWithImpl<$Res>
     Object? errorMessage = freezed,
   }) {
     return _then(
-      _$KazaStateImpl(
+      _$$KazaStateImplImpl(
         data: null == data
             ? _value.data
             : data // ignore: cast_nullable_to_non_nullable
@@ -201,8 +201,8 @@ class __$$KazaStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$KazaStateImpl implements _KazaState {
-  const _$KazaStateImpl({
+class _$$KazaStateImplImpl implements _$KazaStateImpl {
+  const _$$KazaStateImplImpl({
     this.data = const KazaModel(),
     final Map<DateTime, int> history = const {},
     final List<DateTime> voluntaryFasts = const [],
@@ -254,7 +254,7 @@ class _$KazaStateImpl implements _KazaState {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$KazaStateImpl &&
+            other is _$$KazaStateImplImpl &&
             (identical(other.data, data) || other.data == data) &&
             const DeepCollectionEquality().equals(other._history, _history) &&
             const DeepCollectionEquality().equals(
@@ -287,12 +287,15 @@ class _$KazaStateImpl implements _KazaState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$KazaStateImplCopyWith<_$KazaStateImpl> get copyWith =>
-      __$$KazaStateImplCopyWithImpl<_$KazaStateImpl>(this, _$identity);
+  _$$$KazaStateImplImplCopyWith<_$$KazaStateImplImpl> get copyWith =>
+      __$$$KazaStateImplImplCopyWithImpl<_$$KazaStateImplImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _KazaState implements KazaState {
-  const factory _KazaState({
+abstract class _$KazaStateImpl implements KazaState {
+  const factory _$KazaStateImpl({
     final KazaModel data,
     final Map<DateTime, int> history,
     final List<DateTime> voluntaryFasts,
@@ -300,7 +303,7 @@ abstract class _KazaState implements KazaState {
     final double dailyAverageRate,
     final DateTime? expectedCompletionDate,
     final String? errorMessage,
-  }) = _$KazaStateImpl;
+  }) = _$$KazaStateImplImpl;
 
   @override
   KazaModel get data;
@@ -321,6 +324,6 @@ abstract class _KazaState implements KazaState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$KazaStateImplCopyWith<_$KazaStateImpl> get copyWith =>
+  _$$$KazaStateImplImplCopyWith<_$$KazaStateImplImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

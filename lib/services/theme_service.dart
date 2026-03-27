@@ -44,45 +44,62 @@ class ThemeService {
   ];
 
   static ThemePreset getDynamicPreset(DateTime now, {PrayerTimes? prayers}) {
-    if (prayers == null) return presets[0];
+    if (prayers == null) {
+      final hour = now.hour;
+      if (hour >= 20 || hour < 4) return _nightPreset();
+      if (hour >= 4 && hour < 7) return _dawnPreset();
+      if (hour >= 7 && hour < 17) return _dayPreset();
+      return _eveningPreset();
+    }
 
-    final hour = now.hour;
+    final current = prayers.currentPrayer();
+    final next = prayers.nextPrayer();
 
-    // Determine theme based on nearest prayer or time of day
-    if (hour >= 20 || hour < 4) {
-      // Night / Isha
-      return const ThemePreset(
-        name: 'Night',
-        primary: Color(0xFF6366F1), // Indigo
-        secondary: Color(0xFF4F46E5),
-        brightness: Brightness.dark,
-      );
-    } else if (hour >= 4 && hour < 7) {
-      // Dawn / Fajr
-      return const ThemePreset(
-        name: 'Dawn',
-        primary: Color(0xFFF59E0B), // Amber/Gold
-        secondary: Color(0xFFD97706),
-        brightness: Brightness.dark,
-      );
-    } else if (hour >= 7 && hour < 17) {
-      // Day / Dhuhr-Asr
-      return const ThemePreset(
-        name: 'Day',
-        primary: Color(0xFF10B981), // Islamic Green
-        secondary: Color(0xFF059669),
-        brightness: Brightness.light,
-      );
-    } else {
-      // Evening / Maghrib
-      return const ThemePreset(
-        name: 'Evening',
-        primary: Color(0xFFEC4899), // Pink/Rose
-        secondary: Color(0xFFDB2777),
-        brightness: Brightness.dark,
-      );
+    switch (current) {
+      case Prayer.fajr:
+      case Prayer.sunrise:
+        return _dawnPreset();
+      case Prayer.dhuhr:
+      case Prayer.asr:
+        return _dayPreset();
+      case Prayer.maghrib:
+        return _eveningPreset();
+      case Prayer.isha:
+        return _nightPreset();
+      case Prayer.none:
+        // Before Fajr or after Isha
+        if (next == Prayer.fajr) return _nightPreset();
+        return _dayPreset();
     }
   }
+
+  static ThemePreset _nightPreset() => const ThemePreset(
+    name: 'Night',
+    primary: Color(0xFF6366F1), // Indigo
+    secondary: Color(0xFF4F46E5),
+    brightness: Brightness.dark,
+  );
+
+  static ThemePreset _dawnPreset() => const ThemePreset(
+    name: 'Dawn',
+    primary: Color(0xFFF59E0B), // Amber/Gold
+    secondary: Color(0xFFD97706),
+    brightness: Brightness.dark,
+  );
+
+  static ThemePreset _dayPreset() => const ThemePreset(
+    name: 'Day',
+    primary: Color(0xFF10B981), // Islamic Green
+    secondary: Color(0xFF059669),
+    brightness: Brightness.light,
+  );
+
+  static ThemePreset _eveningPreset() => const ThemePreset(
+    name: 'Evening',
+    primary: Color(0xFFEC4899), // Pink/Rose
+    secondary: Color(0xFFDB2777),
+    brightness: Brightness.dark,
+  );
 
   static ThemeData getThemeData(ThemePreset preset) {
     return ThemeData(

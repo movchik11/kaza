@@ -36,7 +36,6 @@ class _SettingsTabState extends State<SettingsTab> {
 
   void _changeLanguage(Locale? locale) {
     if (locale != null) {
-      InteractionUtils.haptic(context);
       context.setLocale(locale);
     }
   }
@@ -64,7 +63,6 @@ class _SettingsTabState extends State<SettingsTab> {
     );
     if (picked != null) {
       if (!mounted) return;
-      InteractionUtils.haptic(context);
       await cubit.setReminderTime(picked.hour, picked.minute);
     }
   }
@@ -105,7 +103,6 @@ class _SettingsTabState extends State<SettingsTab> {
                     title: 'shop.title'.tr(),
                     subtitle: 'shop.subtitle'.tr(),
                     onTap: () {
-                      InteractionUtils.haptic(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -121,7 +118,6 @@ class _SettingsTabState extends State<SettingsTab> {
                     trailing: Switch(
                       value: state.useDynamicTheme,
                       onChanged: (value) {
-                        InteractionUtils.haptic(context);
                         cubit.toggleDynamicTheme(value);
                       },
                       activeTrackColor: colorScheme.primary,
@@ -172,7 +168,6 @@ class _SettingsTabState extends State<SettingsTab> {
                     trailing: Switch(
                       value: state.notificationsEnabled,
                       onChanged: (value) {
-                        InteractionUtils.haptic(context);
                         cubit.toggleNotifications(value);
                       },
                       activeTrackColor: colorScheme.primary,
@@ -208,58 +203,15 @@ class _SettingsTabState extends State<SettingsTab> {
                 ]),
                 const SizedBox(height: 24),
 
-                // Interaction Section
-                _buildSection('settings.interaction'.tr(), [
-                  _buildSettingTile(
-                    icon: Icons.volume_up_rounded,
-                    title: 'settings.sound'.tr(),
-                    trailing: Switch(
-                      value: state.soundEnabled,
-                      onChanged: (value) {
-                        InteractionUtils.haptic(context);
-                        cubit.toggleSound(value);
-                      },
-                      activeTrackColor: colorScheme.primary,
-                      activeThumbColor: Colors.white,
-                    ),
-                  ),
-                  _buildSettingTile(
-                    icon: Icons.vibration_rounded,
-                    title: 'settings.vibration'.tr(),
-                    trailing: Switch(
-                      value: state.vibrationEnabled,
-                      onChanged: (value) {
-                        InteractionUtils.haptic(context);
-                        cubit.toggleVibration(value);
-                      },
-                      activeTrackColor: colorScheme.primary,
-                      activeThumbColor: Colors.white,
-                    ),
-                  ),
-                ]),
-                const SizedBox(height: 24),
-
-                // Privacy Section
-                _buildSection('privacy.title'.tr(), [
-                  _buildSettingTile(
-                    icon: Icons.fingerprint_rounded,
-                    title: 'privacy.lock'.tr(),
-                    subtitle: 'privacy.lockSubtitle'.tr(),
-                    trailing: Switch(
-                      value: state.biometricLockEnabled,
-                      onChanged: (value) async {
-                        InteractionUtils.haptic(context);
-                        cubit.toggleBiometricLock(value);
-                      },
-                      activeTrackColor: colorScheme.primary,
-                      activeThumbColor: Colors.white,
-                    ),
-                  ),
-                ]),
-                const SizedBox(height: 24),
-
                 // Backup & Export Section
                 _buildSection('settings.backup'.tr(), [
+                  _buildSettingTile(
+                    icon: Icons.info_outline_rounded,
+                    title: 'settings.help'.tr(),
+                    subtitle: 'settings.helpKaza'.tr(),
+                    onTap: () => _showHelpDialog(context),
+                  ),
+                  const Divider(height: 1, indent: 56),
                   _buildSettingTile(
                     icon: Icons.picture_as_pdf_rounded,
                     title: 'settings.exportPdf'.tr(),
@@ -281,8 +233,8 @@ class _SettingsTabState extends State<SettingsTab> {
                   _buildSettingTile(
                     icon: Icons.download_rounded,
                     title: 'settings.import'.tr(),
+                    subtitle: 'settings.importSubtitle'.tr(),
                     onTap: () async {
-                      InteractionUtils.haptic(context);
                       final success = await _backupService.importData();
                       if (!context.mounted) return;
                       if (success) {
@@ -373,7 +325,6 @@ class _SettingsTabState extends State<SettingsTab> {
 
     return ListTile(
       onTap: () {
-        InteractionUtils.haptic(context);
         cubit.toggleTheme(mode);
         Navigator.pop(context);
       },
@@ -546,7 +497,7 @@ class _SettingsTabState extends State<SettingsTab> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('Start'),
+              title: Text('common.start'.tr()),
               trailing: Text('${state.silentHoursStart}:00'),
               onTap: () async {
                 final time = await showTimePicker(
@@ -562,7 +513,7 @@ class _SettingsTabState extends State<SettingsTab> {
               },
             ),
             ListTile(
-              title: const Text('End'),
+              title: Text('common.end'.tr()),
               trailing: Text('${state.silentHoursEnd}:00'),
               onTap: () async {
                 final time = await showTimePicker(
@@ -579,7 +530,7 @@ class _SettingsTabState extends State<SettingsTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text('common.ok'.tr()),
           ),
         ],
       ),
@@ -679,6 +630,40 @@ class _SettingsTabState extends State<SettingsTab> {
               Navigator.pop(context);
             },
             child: Text('common.save'.tr()),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showHelpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('settings.help'.tr()),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'settings.helpKaza'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text('library.qaza_rules_content'.tr()),
+            const SizedBox(height: 16),
+            Text(
+              'settings.helpSunnah'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text('confirmation.pointsInfo'.tr()),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('common.ok'.tr()),
           ),
         ],
       ),

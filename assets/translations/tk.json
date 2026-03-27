@@ -50,7 +50,14 @@
         "systemTheme": "Ulgam",
         "interaction": "Täsirleşme",
         "sound": "Ses effektleri",
-        "vibration": "Wibrasiýa seslenmesi"
+        "vibration": "Wibrasiýa seslenmesi",
+        "backupSubtitle": "Enjamda maglumatlaryň ýerli saklanmagy",
+        "exportPdfSubtitle": "Ösüşi PDF faýlyna ýatda saklaň",
+        "exportJsonSubtitle": "JSON formatynda maglumatlary ätiýaçlyk nusgasy",
+        "importSubtitle": "JSON faýlyndan maglumatlary dikeltmek",
+        "help": "Programma boýunça gollanma",
+        "helpKaza": "Geçirilen (kaza) namazlary doldurmak tertibi",
+        "helpSunnah": "Şu günki meýletin namazlary yzarlamak tertibi"
     },
     "onboarding": {
         "bismillah": "Bismilla",
@@ -88,30 +95,44 @@
     },
     "confirmation": {
         "title": "Tassyklaň",
-        "completeDay": "Ýerine ýetirildi diýip bellemek isleýärsiňizmi?"
+        "completeDay": "Ýerine ýetirildi diýip bellemek isleýärsiňizmi?",
+        "pointsInfo": "Ballar Sünnet we Nafl namazlary okanyňyzda berilýär. Olary dükandan täze temalary satyn almak üçin ulanyp bilersiňiz."
     },
     "privacy": {
-        "title": "Gizlinlik",
-        "lock": "Biometrika gulpy",
-        "lockSubtitle": "Barmak yzy ýa-da ýüz arkaly gorag"
+        "title": "Gizlinlik"
     },
     "library": {
         "title": "Kitaphana",
         "articles": "Makalalar",
         "duas": "Dogalar",
         "dailyVerse": "Günüň aýaty",
+        "source": "Çeşme",
         "fiqh": "Fikh",
         "importance_title": "Namazyň ähmiýeti",
         "importance_content": "Namaz (Salah) Yslamyň ikinji rüküni we iň möhüm ybadat amalydyr. Kyýamat gününde möminiň birinji soraljak zady namazdyr. Namaz bende bilen Allanyň arasynda göni aragatnaşyk gurýar.",
         "qaza_rules_title": "Kaza kadalary",
-        "qaza_rules_content": "Eger namaz geçirilen bolsa, ol mümkin boldugyça çalt doldurylmaly bergidir (Kaza). Alymlaryň köpüsiniň pikiriçe, kaza namazlary sanalsa tertip bilen, köp bolsaislendik wagt (gün dogan, gün iň ýokary nokadynda we gün ýaşýan wagtyndan başga) okalmalydyr."
+        "qaza_rules_content": "Eger namaz geçirilen bolsa, ol mümkin boldugyça çalt doldurylmaly bergidir (Kaza). Alymlaryň köpüsiniň pikiriçe, kaza namazlary sanalsa tertip bilen, köp bolsa islendik wagt (gün dogan, gün iň ýokary nokadynda we gün ýaşýan wagtyndan başga) okalmalydyr.",
+        "benefits_title": "Namazyň peýdasy",
+        "benefits_content": "Namaz adamy erbetlikden we günäden saklaýar, kalby arassalaýar we göwne aramlyk berýär. Bu möminiň durmuşynda bir nurdur.",
+        "dua_kursi_title": "Aýatül-Kürsi",
+        "dua_kursi_arabic": "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُво الْعَلِيُّ الْعَظِيمُ",
+        "dua_kursi_phonetic": "Allahu lä ilähe illä huwel-haýýul-kaýýum, lä ta’huzuhu sinetun we lä newm, lehu ma fis-semäwäti we ma fil-ard...",
+        "dua_kursi_translation": "Alla - Ondan başga hudaý ýokdur, Ol diridir, ebedidir. Ony ne uky, ne-de gysby tutar. Göklerdäki we ýerdäki ähli zat Onuňkydyr...",
+        "after_salah_title": "Namazdan soňky doga",
+        "after_salah_arabic": "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ",
+        "after_salah_phonetic": "Allahümme entes-selämu we minkes-seläm, tebärekte ýä zel-jeläli wel-ikräm",
+        "after_salah_translation": "Eý, Allahym! Sen selämetlik eýesidirsiň, ähli selämetlik Sendedir. Eý, jelal we ikram eýesi, Sen nähili beýikdirsiň!"
     },
     "common": {
         "cancel": "Ýatyr",
         "confirm": "Tassykla",
         "save": "Ýatda sakla",
         "delete": "Öçür",
-        "noData": "Häzirçe maglumat ýok"
+        "noData": "Häzirçe maglumat ýok",
+        "ok": "Bolýar",
+        "start": "Başlangyç",
+        "end": "Ahyry",
+        "or": "ÝA-DA"
     },
     "calendar": {
         "upcoming": "Ýakynda",
@@ -139,7 +160,8 @@
             "new_year": "Yslam Täze Ýyly",
             "ashura": "Aşura güni",
             "mawlid": "Möwlüd gijesi"
-        }
+        },
+        "holidays_title": "Yslam baýramlary"
     },
     "fasting_rules": {
         "suhoorEnds": "Sähärlik gutarýar",
